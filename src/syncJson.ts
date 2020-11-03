@@ -31,14 +31,15 @@ function generatePluralForms({
 
   pluralForms.forEach((key) => {
     newTargetObject[key] =
-      targetObject[key] && !isObject(targetObject[key])
+      (targetObject && targetObject[key] && !isObject(targetObject[key])
         ? targetObject[key]
-        : sourceObject[key] || sourceObject[sourceKey];
+        : sourceObject[key]) || sourceObject[sourceKey];
   });
 }
 
 function syncEntry(sourceLng: string, targetLng: string) {
   const sourceSuffixes = pluralResolver.getPluralFormsOfKey('', sourceLng).filter(Boolean);
+  const targetSuffixes = pluralResolver.getPluralFormsOfKey('', targetLng).filter(Boolean);
 
   const isTargetRequiresPluralForm = pluralResolver.needsPlural(targetLng);
 
@@ -69,6 +70,15 @@ function syncEntry(sourceLng: string, targetLng: string) {
     } else {
       newTargetObject[sourceKey] =
         targetValue && !isObject(targetValue) ? targetValue : sourceValue;
+
+      // keeps existing plural forms
+      targetSuffixes.forEach((suffix) => {
+        const pluralTargetKey = `${sourceKey}${suffix}`;
+
+        if (targetObject && targetObject[pluralTargetKey]) {
+          newTargetObject[pluralTargetKey] = targetObject[pluralTargetKey];
+        }
+      });
     }
   };
 }
