@@ -31,7 +31,7 @@
     "singleQuote": true
   },
   "name": "i18next-locales-sync",
-  "author": "Felix Mosheev",
+  "author": "FelixMosh",
   "module": "dist/i18next-locales-sync.esm.js",
   "size-limit": [
     {

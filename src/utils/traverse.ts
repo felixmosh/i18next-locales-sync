@@ -8,12 +8,14 @@ export function traverse(
   fn: (
     sourceObj: JSONObject,
     targetObj: JSONObject,
+    newTargetObj: JSONObject,
     prop: string,
     sourceValue: JSONValue,
     targetValue: JSONValue
-  ) => void,
-  depth = MAX_DEPTH
-) {
+  ) => any,
+  depth = MAX_DEPTH,
+  finalObj: any = {}
+): JSONObject {
   if (depth === 0) {
     throw new Error(`${LIB_PREFIX} given json with depth that is deeper than ${MAX_DEPTH}`);
   }
@@ -24,9 +26,11 @@ export function traverse(
     }
 
     const sourceValue = source[key];
-    fn.apply(null, [source, target, key, source[key], target[key]]);
+    fn.apply(null, [source, target, finalObj, key, source[key], target && target[key]]);
     if (isObject(sourceValue)) {
-      traverse(sourceValue, target[key] as any, fn, depth - 1);
+      traverse(sourceValue, target && (target[key] as any), fn, depth - 1, finalObj[key]);
     }
   }
+
+  return finalObj;
 }
