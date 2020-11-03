@@ -26,4 +26,36 @@ describe('syncJson: plurals', () => {
 
     expect(actual.data).toStrictEqual({ book: 'book en' });
   });
+
+  it('should not override existing plural forms', () => {
+    const source = {
+      data: { book: 'book en', book_plural: 'books en' },
+      language: 'en',
+    };
+    const actual = syncJson({
+      source,
+      target: { data: { book_plural: 'books de' }, language: 'de' },
+    });
+
+    expect(actual.data).toStrictEqual({
+      book: 'book en',
+      book_plural: 'books de',
+    });
+  });
+
+  it('should not override existing values', () => {
+    const source = {
+      data: { book: 'book en', book_plural: 'books en' },
+      language: 'en',
+    };
+    const actual = syncJson({
+      source,
+      target: { data: { book: 'book de', book_plural: 'books de' }, language: 'de' },
+    });
+
+    expect(actual.data).toStrictEqual({
+      book: 'book de',
+      book_plural: 'books de',
+    });
+  });
 });

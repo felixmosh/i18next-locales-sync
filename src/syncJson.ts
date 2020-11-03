@@ -13,7 +13,7 @@ function generatePluralForms({
   sourceLng,
   targetLng,
   newTargetObject,
-  targetValue,
+  targetObject,
   sourceObject,
 }: {
   sourceObject: JSONObject;
@@ -28,9 +28,12 @@ function generatePluralForms({
   const singularSourceKey = pluralResolver.getSingularFormOfKey(sourceKey, sourceLng);
 
   const pluralForms = pluralResolver.getPluralFormsOfKey(singularSourceKey, targetLng);
+
   pluralForms.forEach((key) => {
     newTargetObject[key] =
-      targetValue && !isObject(targetValue) ? targetValue : sourceObject[sourceKey];
+      targetObject[key] && !isObject(targetObject[key])
+        ? targetObject[key]
+        : sourceObject[key] || sourceObject[sourceKey];
   });
 }
 
