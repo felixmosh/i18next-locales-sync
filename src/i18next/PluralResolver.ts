@@ -5,6 +5,7 @@ import { LanguageUtil } from './LanguageUtils';
 
 type Rule = { numbers: number[]; plurals: (n: any) => number; noAbs?: boolean };
 type RuleSet = Record<string, Rule>;
+
 interface PluralResolverOptions {
   simplifyPluralSuffix?: boolean;
   prepend?: string;
@@ -167,16 +168,16 @@ const sets = [
 ];
 
 const _rulesPluralsTypes: Record<number, (n: any) => number> = {
-  1: function (n: any) {
+  1: function(n: any) {
     return Number(n > 1);
   },
-  2: function (n: any) {
+  2: function(n: any) {
     return Number(n != 1);
   },
-  3: function (_n: any) {
+  3: function(_n: any) {
     return 0;
   },
-  4: function (n: any) {
+  4: function(n: any) {
     return Number(
       n % 10 == 1 && n % 100 != 11
         ? 0
@@ -185,7 +186,7 @@ const _rulesPluralsTypes: Record<number, (n: any) => number> = {
         : 2
     );
   },
-  5: function (n: any) {
+  5: function(n: any) {
     return Number(
       n === 0
         ? 0
@@ -200,50 +201,50 @@ const _rulesPluralsTypes: Record<number, (n: any) => number> = {
         : 5
     );
   },
-  6: function (n: any) {
+  6: function(n: any) {
     return Number(n == 1 ? 0 : n >= 2 && n <= 4 ? 1 : 2);
   },
-  7: function (n: any) {
+  7: function(n: any) {
     return Number(
       n == 1 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2
     );
   },
-  8: function (n: any) {
+  8: function(n: any) {
     return Number(n == 1 ? 0 : n == 2 ? 1 : n != 8 && n != 11 ? 2 : 3);
   },
-  9: function (n: any) {
+  9: function(n: any) {
     return Number(n >= 2);
   },
-  10: function (n: any) {
+  10: function(n: any) {
     return Number(n == 1 ? 0 : n == 2 ? 1 : n < 7 ? 2 : n < 11 ? 3 : 4);
   },
-  11: function (n: any) {
+  11: function(n: any) {
     return Number(n == 1 || n == 11 ? 0 : n == 2 || n == 12 ? 1 : n > 2 && n < 20 ? 2 : 3);
   },
-  12: function (n: any) {
+  12: function(n: any) {
     return Number(n % 10 != 1 || n % 100 == 11);
   },
-  13: function (n: any) {
+  13: function(n: any) {
     return Number(n !== 0);
   },
-  14: function (n: any) {
+  14: function(n: any) {
     return Number(n == 1 ? 0 : n == 2 ? 1 : n == 3 ? 2 : 3);
   },
-  15: function (n: any) {
+  15: function(n: any) {
     return Number(
       n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2
     );
   },
-  16: function (n: any) {
+  16: function(n: any) {
     return Number(n % 10 == 1 && n % 100 != 11 ? 0 : n !== 0 ? 1 : 2);
   },
-  17: function (n: any) {
+  17: function(n: any) {
     return Number(n == 1 || n % 10 == 1 ? 0 : 1);
   },
-  18: function (n: any) {
+  18: function(n: any) {
     return Number(n == 0 ? 0 : n == 1 ? 1 : 2);
   },
-  19: function (n: any) {
+  19: function(n: any) {
     return Number(
       n == 1
         ? 0
@@ -254,16 +255,17 @@ const _rulesPluralsTypes: Record<number, (n: any) => number> = {
         : 3
     );
   },
-  20: function (n: any) {
+  20: function(n: any) {
     return Number(n == 1 ? 0 : n === 0 || (n % 100 > 0 && n % 100 < 20) ? 1 : 2);
   },
-  21: function (n: any) {
+  21: function(n: any) {
     return Number(n % 100 == 1 ? 1 : n % 100 == 2 ? 2 : n % 100 == 3 || n % 100 == 4 ? 3 : 0);
   },
-  22: function (n: any) {
+  22: function(n: any) {
     return Number(n === 1 ? 0 : n === 2 ? 1 : (n < 0 || n > 10) && n % 10 == 0 ? 2 : 3);
   },
 };
+
 /* eslint-enable */
 
 function createRules(): RuleSet {
