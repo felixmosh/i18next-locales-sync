@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import fs from 'fs';
+import fs from 'fs-extra';
 import * as glob from 'glob';
 import path from 'path';
 import { LocaleFile, LocalesFiles } from '../types/types';
@@ -23,10 +23,10 @@ function extractNamespaceFromPath(filepath: string, language: string, fileExtens
     return ''; // empty namespace
   }
 
-  return filepath.substring(
-    filepath.lastIndexOf(language) + language.length + 1,
-    filepath.length - fileExtension.length
-  );
+  const namespaceParts = filepath.split(/[\\\/]/g).filter((part) => !part.startsWith(language));
+  namespaceParts[namespaceParts.length - 1] = filename;
+
+  return namespaceParts.join(path.sep);
 }
 
 function addMissingLanguages(localeFiles: LocalesFiles, otherLanguages: string[]) {
@@ -44,8 +44,18 @@ function addMissingNamespaces(
 
   Object.keys(primaryFiles).forEach((namespace) => {
     otherLanguages.forEach((otherLanguage) => {
+      const filePath = primaryFiles[namespace].filePath
+        .split(/[\\\/]/g)
+        .map((part) => {
+          if (part.startsWith(primaryLanguage)) {
+            return part.replace(primaryLanguage, otherLanguage);
+          }
+          return part;
+        })
+        .join(path.sep);
+
       localeFiles[otherLanguage][namespace] = localeFiles[otherLanguage][namespace] || {
-        filePath: null,
+        filePath,
         hash: '',
         data: {},
       };
@@ -58,8 +68,7 @@ export function populateFromDisk(filePath: string): LocaleFile {
   let hash = '';
 
   if (fs.existsSync(filePath)) {
-    const rawData = fs.readFileSync(filePath, 'utf8');
-    data = JSON.parse(rawData);
+    data = fs.readJSONSync(filePath, { encoding: 'utf8' });
 
     hash = crypto
       .createHash('md5')

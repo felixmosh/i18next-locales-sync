@@ -1,5 +1,7 @@
+import crypto from 'crypto';
 import { LocalesFiles } from '../../types/types';
 import path from 'path';
+import fs from 'fs-extra';
 
 interface Options {
   localeFiles: LocalesFiles;
@@ -14,19 +16,31 @@ export function writeToDisk({
   primaryLanguage,
   otherLanguages,
   localesFolder,
+  outputFolder,
 }: Options) {
-  // const primaryLocaleFile = localeFiles[primaryLanguage];
+  const primaryLocaleFile = localeFiles[primaryLanguage];
 
   otherLanguages.forEach((otherLanguage) => {
-    Object.keys(primaryLanguage).forEach((primaryNamespace) => {
-      const filePath = console.log(
-        path.relative(localeFiles[otherLanguage][primaryNamespace].filePath, localesFolder)
-      );
-      // fs.writeJSONSync(
-      //   path.join(outputFolder, localeFiles[otherLanguage][primaryNamespace].filePath),
-      //   {},
-      //   { spaces: 2, encoding: 'utf-8' }
-      // );
+    Object.keys(primaryLocaleFile).forEach((primaryNamespace) => {
+      const otherLanguageLocaleFile = localeFiles[otherLanguage][primaryNamespace];
+
+      const filePath = path.relative(localesFolder, otherLanguageLocaleFile.filePath);
+      const outputFilePath = path.join(outputFolder, filePath);
+
+      if (
+        otherLanguageLocaleFile.hash === '' ||
+        otherLanguageLocaleFile.hash !==
+          crypto
+            .createHash('md5')
+            .update(JSON.stringify(otherLanguageLocaleFile.data))
+            .digest('hex')
+      ) {
+        fs.ensureFileSync(outputFilePath);
+        fs.writeJSONSync(outputFilePath, otherLanguageLocaleFile.data, {
+          spaces: 2,
+          encoding: 'utf-8',
+        });
+      }
     });
   });
 }
