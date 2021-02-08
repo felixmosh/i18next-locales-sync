@@ -9,3 +9,11 @@ export interface Inputs {
   target: LocaleObject;
   depth?: number;
 }
+
+export type LocaleFile = {
+  filePath: string;
+  data: JSONObject;
+  hash: string;
+};
+
+export type LocalesFiles = Record<string, Record<string, LocaleFile>>;

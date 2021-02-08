@@ -12,10 +12,10 @@
   },
   "scripts": {
     "start": "tsdx watch --target=node",
-    "build": "tsdx build --target=node",
+    "build": "tsdx build --target=node --format=cjs",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "tsdx build --target=node --format=cjs",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
@@ -40,10 +40,17 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.7.0",
+    "@types/fs-extra": "^9.0.6",
+    "@types/glob": "^7.1.3",
     "husky": "^4.3.0",
     "size-limit": "^4.7.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
     "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "yargs": "^16.2.0"
   }
 }
