@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`syncLocales should sync locale files with namespaces 1`] = `
+exports[`syncLocales - E2E should sync locale files with namespaces 1`] = `
 Object {
   "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/de/common.json": "{\\"test\\":\\"bla-de\\",\\"test_plural\\":\\"bla-plural\\"}",
   "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/de/front.json": "{\\"title\\":\\"front\\"}",
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`syncLocales should sync locale files with nested namespaces 1`] = `
+exports[`syncLocales - E2E should sync locale files with nested namespaces 1`] = `
 Object {
   "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture3/de/common.json": "{\\"test\\":\\"bla-de\\",\\"test_plural\\":\\"bla-plural\\"}",
   "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture3/de/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
@@ -24,7 +24,7 @@ Object {
 }
 `;
 
-exports[`syncLocales should sync locale files without namespaces 1`] = `
+exports[`syncLocales - E2E should sync locale files without namespaces 1`] = `
 Object {
   "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture1/de.json": "{\\"test\\":\\"bla\\",\\"test_plural\\":\\"bla-plural\\"}",
   "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture1/he.json": "{\\"test\\":\\"bla\\",\\"test_0\\":\\"bla-0\\",\\"test_1\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
