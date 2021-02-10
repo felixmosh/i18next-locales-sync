@@ -13,7 +13,7 @@ interface Options {
 }
 
 function extractLanguagesFromPath(filepath: string, allLanguages: string[]) {
-  const pathParts = filepath.split(/[\\\/]/g);
+  const pathParts = filepath.split(/[\\/]/g);
   return allLanguages.find((language) => pathParts.some((part) => part.startsWith(language)));
 }
 
@@ -21,7 +21,7 @@ function extractNamespaceFromPath(filepath: string, language: string, fileExtens
   const filename = path.basename(filepath, fileExtension);
   const filepathWithoutExtension = path.join(path.dirname(filepath), filename);
 
-  const pathParts = filepathWithoutExtension.split(/[\\\/]/g);
+  const pathParts = filepathWithoutExtension.split(/[\\/]/g);
 
   if (pathParts.length < 2) {
     // handle empty namespace
@@ -49,7 +49,7 @@ function addMissingNamespaces(
   Object.keys(primaryFiles).forEach((namespace) => {
     otherLanguages.forEach((otherLanguage) => {
       const filePath = primaryFiles[namespace].filePath
-        .split(/[\\\/]/g)
+        .split(/[\\/]/g)
         .map((part) => {
           if (part.startsWith(primaryLanguage)) {
             return part.replace(primaryLanguage, otherLanguage);

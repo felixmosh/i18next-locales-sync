@@ -5,17 +5,17 @@
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "types"
   ],
   "engines": {
     "node": ">=12"
   },
   "scripts": {
     "start": "tsdx watch --target=node",
-    "build": "tsdx build --target=node --format=cjs",
+    "build": "rm -rf dist && tsc",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build --target=node --format=cjs",
+    "prepare": "npm run build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
