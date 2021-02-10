@@ -6,25 +6,26 @@ import { hasSomePluralSuffix } from './utils/hasSomePluralSuffix';
 import { isObject } from './utils/isObject';
 import { traverse } from './utils/traverse';
 
-const pluralResolver = new PluralResolver(new LanguageUtil());
-
-function generatePluralForms({
-  sourceKey,
-  sourceLng,
-  targetLng,
-  newTargetObject,
-  targetObject,
-  sourceObject,
-}: {
-  sourceObject: JSONObject;
-  targetObject: JSONObject;
-  newTargetObject: JSONObject;
-  sourceKey: string;
-  sourceValue: JSONValue;
-  targetValue: JSONValue;
-  sourceLng: string;
-  targetLng: string;
-}) {
+function generatePluralForms(
+  {
+    sourceKey,
+    sourceLng,
+    targetLng,
+    newTargetObject,
+    targetObject,
+    sourceObject,
+  }: {
+    sourceObject: JSONObject;
+    targetObject: JSONObject;
+    newTargetObject: JSONObject;
+    sourceKey: string;
+    sourceValue: JSONValue;
+    targetValue: JSONValue;
+    sourceLng: string;
+    targetLng: string;
+  },
+  pluralResolver: PluralResolver
+) {
   const singularSourceKey = pluralResolver.getSingularFormOfKey(sourceKey, sourceLng);
 
   const pluralForms = pluralResolver.getPluralFormsOfKey(singularSourceKey, targetLng);
@@ -37,7 +38,7 @@ function generatePluralForms({
   });
 }
 
-function syncEntry(sourceLng: string, targetLng: string) {
+function syncEntry(sourceLng: string, targetLng: string, pluralResolver: PluralResolver) {
   const sourceSuffixes = pluralResolver.getPluralFormsOfKey('', sourceLng).filter(Boolean);
   const targetSuffixes = pluralResolver.getPluralFormsOfKey('', targetLng).filter(Boolean);
 
@@ -57,16 +58,19 @@ function syncEntry(sourceLng: string, targetLng: string) {
       newTargetObject[sourceKey] = {};
     } else if (hasSomePluralSuffix(sourceKey, sourceSuffixes)) {
       isTargetRequiresPluralForm &&
-        generatePluralForms({
-          sourceObject,
-          targetObject,
-          newTargetObject,
-          sourceValue,
-          targetValue,
-          sourceKey,
-          sourceLng,
-          targetLng,
-        });
+        generatePluralForms(
+          {
+            sourceObject,
+            targetObject,
+            newTargetObject,
+            sourceValue,
+            targetValue,
+            sourceKey,
+            sourceLng,
+            targetLng,
+          },
+          pluralResolver
+        );
     } else {
       newTargetObject[sourceKey] =
         targetValue && !isObject(targetValue) ? targetValue : sourceValue;
@@ -83,11 +87,16 @@ function syncEntry(sourceLng: string, targetLng: string) {
   };
 }
 
-export function syncJson({ source, target, depth = MAX_DEPTH }: Inputs) {
+export function syncJson({
+  source,
+  target,
+  depth = MAX_DEPTH,
+  pluralResolver = new PluralResolver(new LanguageUtil()),
+}: Inputs) {
   target.data = traverse(
     source.data,
     target.data,
-    syncEntry(source.language, target.language),
+    syncEntry(source.language, target.language, pluralResolver),
     depth
   );
 

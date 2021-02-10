@@ -1,16 +1,19 @@
 import { LocalesFiles } from '../types/types';
+import { PluralResolver } from './i18next/PluralResolver';
 import { syncJson } from './syncJson';
 
 interface Options {
   localeFiles: LocalesFiles;
   primaryLanguage: string;
   otherLanguages: string[];
+  pluralResolver?: PluralResolver;
 }
 
 export function syncLocaleFiles({
   localeFiles,
   primaryLanguage,
   otherLanguages,
+  pluralResolver,
 }: Options): LocalesFiles {
   const primaryLocaleFiles = localeFiles[primaryLanguage];
   otherLanguages.forEach((currentLanguage) => {
@@ -20,6 +23,7 @@ export function syncLocaleFiles({
       const { data } = syncJson({
         source: { data: primaryLocaleFiles[primaryNamespace].data, language: primaryLanguage },
         target: { data: currentNamespaces[primaryNamespace].data, language: currentLanguage },
+        pluralResolver,
       });
 
       currentNamespaces[primaryNamespace].data = data;
