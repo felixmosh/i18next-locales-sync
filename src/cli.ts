@@ -1,59 +1,77 @@
 #!/usr/bin/env node
 
-import { Command, InvalidOptionArgumentError } from 'commander';
-import path from 'path';
 import fs from 'fs-extra';
+import * as path from 'path';
+import yargs from 'yargs';
+import { LIB_PREFIX } from './constats';
 import chalk from 'chalk';
-import pkg from '../package.json';
 import { syncLocales } from './index';
 
-function ensureAbsolutePath(folderPath: string) {
-  if (!path.isAbsolute(folderPath)) {
-    folderPath = path.resolve(folderPath);
-  }
-
-  if (!fs.existsSync(folderPath)) {
-    throw new InvalidOptionArgumentError(chalk.red(`\n'${folderPath}' doesn't exist`));
-  }
-
-  return folderPath;
-}
-
-const program = new Command();
-
-program
-  .version(pkg.version)
-  .option('-p, --primaryLanguage <string>', 'The primary language', 'en')
-  .option(
-    '-s, --secondaryLanguage <string...>',
-    'The secondary language, may be a list of languages'
-  )
-  .option(
-    '-l, --localesFolder <string>',
-    'The locals folder path (can be relative)',
-    ensureAbsolutePath
-  )
-  .option(
-    '-o, --outputFolder <string>',
-    'The output folder, by default it will be the localesFolder',
-    ensureAbsolutePath
-  )
-  .option('-c, --config <string>', 'The path to config file', ensureAbsolutePath);
-
-program.parse();
-
-const options = program.opts();
+const options = yargs.usage('i18next-locales-sync -p en -s de ja he -l ./path/to/locales').option({
+  primaryLanguage: {
+    alias: 'p',
+    type: 'string',
+    description: 'The primary (source) language',
+    default: 'en',
+  },
+  secondaryLanguages: {
+    alias: 's',
+    description: 'A list of all other supported languages',
+    type: 'array',
+    default: [],
+  },
+  localesFolder: {
+    alias: 'l',
+    description: 'The locals folder path (can be relative)',
+    type: 'string',
+    normalize: true,
+  },
+  outputFolder: {
+    alias: 'o',
+    description: 'The output folder',
+    defaultDescription: '`localesFolder`',
+    type: 'string',
+    normalize: true,
+  },
+  config: {
+    alias: 'c',
+    description: 'A path to the config file',
+    type: 'string',
+    normalize: true,
+  },
+}).argv;
 
 if (options.config) {
+  options.config = path.resolve(options.config);
+  if (!fs.existsSync(options.config)) {
+    throw new Error(chalk.red`${LIB_PREFIX} Config file '${options.config}' doesn't exist`);
+  }
+
   const usersOptions = require(options.config);
 
   Object.assign(options, usersOptions);
 }
 
+if (!options.localesFolder) {
+  throw new Error(chalk.red`${LIB_PREFIX} 'localesFolder' is mandatory option`);
+} else {
+  options.localesFolder = path.resolve(options.localesFolder);
+
+  if (!fs.existsSync(options.localesFolder)) {
+    throw new Error(
+      chalk.red`${LIB_PREFIX} Locales folder '${options.localesFolder}' doesn't exist`
+    );
+  }
+}
+
+if (options.outputFolder) {
+  options.outputFolder = path.resolve(options.outputFolder);
+}
+
 syncLocales({
   primaryLanguage: options.primaryLanguage,
-  otherLanguages: options.secondaryLanguage,
+  otherLanguages: options.secondaryLanguages,
   localesFolder: options.localesFolder,
   outputFolder: options.outputFolder,
-  overridePluralRules: options.overridePluralRules,
+  overridePluralRules: options.overridePluralRules as any,
 });
