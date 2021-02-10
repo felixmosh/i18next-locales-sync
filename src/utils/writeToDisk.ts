@@ -20,7 +20,7 @@ export function writeToDisk({
 }: Options) {
   const primaryLocaleFile = localeFiles[primaryLanguage];
 
-  otherLanguages.forEach((otherLanguage) => {
+  [primaryLanguage].concat(otherLanguages).forEach((otherLanguage) => {
     Object.keys(primaryLocaleFile).forEach((primaryNamespace) => {
       const otherLanguageLocaleFile = localeFiles[otherLanguage][primaryNamespace];
 
@@ -28,6 +28,7 @@ export function writeToDisk({
       const outputFilePath = path.join(outputFolder, filePath);
 
       if (
+        localesFolder !== outputFolder ||
         otherLanguageLocaleFile.hash === '' ||
         otherLanguageLocaleFile.hash !==
           crypto

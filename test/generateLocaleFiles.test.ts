@@ -109,4 +109,26 @@ describe('generateLocaleFiles', () => {
       },
     });
   });
+
+  it('should support {namespace}/{language} folder structure', () => {
+    const localeFiles = generateLocaleFiles({
+      primaryLanguage: 'en',
+      otherLanguages: ['he'],
+      localesFolder: path.resolve('./test/fixtures/fixture4'),
+      fileExtension: '.json',
+    });
+
+    expect(localeFiles).toHaveProperty('he', {
+      common: {
+        data: { test: 'bla-he', test_1: 'bla-1' },
+        hash: expect.any(String),
+        filePath: expect.stringContaining('/test/fixtures/fixture4/common/he.json'),
+      },
+      front: {
+        data: { test: 'bla', test_0: 'bla-0' },
+        hash: expect.any(String),
+        filePath: expect.stringContaining('/test/fixtures/fixture4/front/he.json'),
+      },
+    });
+  });
 });

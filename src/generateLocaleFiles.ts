@@ -19,12 +19,16 @@ function extractLanguagesFromPath(filepath: string, allLanguages: string[]) {
 
 function extractNamespaceFromPath(filepath: string, language: string, fileExtension: string) {
   const filename = path.basename(filepath, fileExtension);
-  if (filename === language) {
-    return ''; // empty namespace
+  const filepathWithoutExtension = path.join(path.dirname(filepath), filename);
+
+  const pathParts = filepathWithoutExtension.split(/[\\\/]/g);
+
+  if (pathParts.length < 2) {
+    // handle empty namespace
+    pathParts.push('');
   }
 
-  const namespaceParts = filepath.split(/[\\\/]/g).filter((part) => !part.startsWith(language));
-  namespaceParts[namespaceParts.length - 1] = filename;
+  const namespaceParts = pathParts.filter((part) => !part.startsWith(language));
 
   return namespaceParts.join(path.sep);
 }

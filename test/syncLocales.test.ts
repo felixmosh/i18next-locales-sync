@@ -50,4 +50,36 @@ describe('syncLocales - E2E', () => {
 
     expect(vol.toJSON(outputFolder)).toMatchSnapshot();
   });
+
+  it('should sync locales to the same locales folder', () => {
+    const primaryLanguage = 'en';
+    const otherLanguages = ['ja', 'he', 'de'];
+    const localesFolder = path.resolve('./test/fixtures/fixture3');
+
+    syncLocales({
+      primaryLanguage,
+      otherLanguages,
+      localesFolder: localesFolder,
+      outputFolder: localesFolder,
+      fileExtension: '.json',
+    });
+
+    expect(vol.toJSON(localesFolder)).toMatchSnapshot();
+  });
+
+  it('should sync locale files with different folder structure', () => {
+    const primaryLanguage = 'en';
+    const otherLanguages = ['ja', 'he', 'de'];
+    const outputFolder = path.resolve('./test/output/fixture4');
+
+    syncLocales({
+      primaryLanguage,
+      otherLanguages,
+      localesFolder: path.resolve('./test/fixtures/fixture4'),
+      outputFolder,
+      fileExtension: '.json',
+    });
+
+    expect(vol.toJSON(outputFolder)).toMatchSnapshot();
+  });
 });
