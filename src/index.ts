@@ -1,13 +1,13 @@
+import chalk from 'chalk';
 import { LIB_PREFIX } from './constats';
 import { generateLocaleFiles } from './generateLocaleFiles';
 import { PluralResolver } from './i18next/PluralResolver';
 import { syncLocaleFiles } from './syncLocaleFiles';
 import { writeToDisk } from './utils/writeToDisk';
-import chalk from 'chalk';
 
 interface SyncLocalesOptions {
   primaryLanguage: string;
-  otherLanguages: string[];
+  secondaryLanguages: string[];
   localesFolder: string;
   outputFolder?: string;
   fileExtension?: string;
@@ -16,11 +16,11 @@ interface SyncLocalesOptions {
 
 export function syncLocales({
   primaryLanguage,
-  otherLanguages,
+  secondaryLanguages: otherLanguages,
   localesFolder,
   outputFolder = localesFolder,
-  fileExtension = '.json',
   overridePluralRules,
+  fileExtension = '.json',
 }: SyncLocalesOptions) {
   const pluralResolver = new PluralResolver();
 
@@ -35,9 +35,20 @@ export function syncLocales({
     fileExtension,
   });
 
-  syncLocaleFiles({ localeFiles, primaryLanguage, otherLanguages, pluralResolver });
+  syncLocaleFiles({
+    localeFiles,
+    primaryLanguage,
+    otherLanguages,
+    pluralResolver,
+  });
 
-  writeToDisk({ localeFiles, primaryLanguage, otherLanguages, outputFolder, localesFolder });
+  writeToDisk({
+    localeFiles,
+    primaryLanguage,
+    otherLanguages,
+    outputFolder,
+    localesFolder,
+  });
 
   console.log(
     chalk.green`${chalk.bold.greenBright(LIB_PREFIX)} '${localesFolder}' were synced successfully.`

@@ -70,7 +70,7 @@ if (options.outputFolder) {
 
 syncLocales({
   primaryLanguage: options.primaryLanguage,
-  otherLanguages: options.secondaryLanguages,
+  secondaryLanguages: options.secondaryLanguages,
   localesFolder: options.localesFolder,
   outputFolder: options.outputFolder,
   overridePluralRules: options.overridePluralRules as any,

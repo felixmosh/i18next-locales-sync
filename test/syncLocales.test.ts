@@ -10,7 +10,7 @@ describe('syncLocales - E2E', () => {
 
     syncLocales({
       primaryLanguage,
-      otherLanguages,
+      secondaryLanguages: otherLanguages,
       localesFolder: path.resolve('./test/fixtures/fixture1'),
       outputFolder,
       fileExtension: '.json',
@@ -26,7 +26,7 @@ describe('syncLocales - E2E', () => {
 
     syncLocales({
       primaryLanguage,
-      otherLanguages,
+      secondaryLanguages: otherLanguages,
       localesFolder: path.resolve('./test/fixtures/fixture2'),
       outputFolder,
       fileExtension: '.json',
@@ -42,7 +42,7 @@ describe('syncLocales - E2E', () => {
 
     syncLocales({
       primaryLanguage,
-      otherLanguages,
+      secondaryLanguages: otherLanguages,
       localesFolder: path.resolve('./test/fixtures/fixture3'),
       outputFolder,
       fileExtension: '.json',
@@ -58,7 +58,7 @@ describe('syncLocales - E2E', () => {
 
     syncLocales({
       primaryLanguage,
-      otherLanguages,
+      secondaryLanguages: otherLanguages,
       localesFolder: localesFolder,
       outputFolder: localesFolder,
       fileExtension: '.json',
@@ -74,7 +74,7 @@ describe('syncLocales - E2E', () => {
 
     syncLocales({
       primaryLanguage,
-      otherLanguages,
+      secondaryLanguages: otherLanguages,
       localesFolder: path.resolve('./test/fixtures/fixture4'),
       outputFolder,
       fileExtension: '.json',

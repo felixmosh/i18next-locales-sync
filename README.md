@@ -1,103 +1,147 @@
-# TSDX User Guide
+# i18next-locales-sync
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+![CI](https://github.com/felixmosh/i18next-locales-sync/workflows/CI/badge.svg)
+[![npm](https://img.shields.io/npm/v/i18next-locales-sync.svg)](https://www.npmjs.com/package/i18next-locales-sync)
 
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+Syncs [i18next](https://github.com/i18next/i18next) locale resource files against a primary language.
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+## Installation
 
-## Commands
-
-TSDX scaffolds your new library inside `/src`.
-
-To run TSDX, use:
-
-```bash
-npm start # or yarn start
+```sh
+$ npm install --save-dev i18next-locales-sync
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+## Features
 
-To do a one-off build, use `npm run build` or `yarn build`.
+1. Supports (namespaces)[https://www.i18next.com/principles/namespaces].
+2. Full plural support, based on the real [i18next pluralResolver](https://github.com/felixmosh/i18next-locales-sync/blob/master/src/i18next/PluralResolver.ts).
+3. Sorting secondary locale keys by primary language order.
+4. Supports multiple locale folder structure, `{lng}/{namespace}`, `{namespace}/{lng}`.  
+5. Creates missing locale files.
+6. Allows overriding plural rules.
 
-To run tests, use `npm test` or `yarn test`.
+## Usage
 
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+### 1. CLI
+```sh
+$ npx i18next-locales-sync -p he -s en de ja -l path/to/locales/folder
 ```
-
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
+or using config file
 ```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
+// localesSync.config.js
+module.exports = {
+  primaryLanguage: 'he',
+  secondaryLanguages: ['en', 'de', 'ja'],
+  localesFolder: './path/to/locales/folder',
+  overridePluralRules: (pluralResolver) =>
+    pluralResolver.addRule('he', pluralResolver.getRule('en')), // This is available only when using config file
+};
+```
+```sh
+$ npx i18next-locales-sync -c ./localesSync.config.js
+```
 
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+### 2. Node
+```js
+import { syncLocales } from 'i18next-locales-sync';
+import path from 'path';
+
+syncLocales({
+  primaryLanguage: 'en',
+  secondaryLanguages: ['en', 'de', 'ja'],
+  localesFolder: path.resolve('./path/to/locales/folder'),
+  overridePluralRules: (pluralResolver) =>
+    pluralResolver.addRule('he', pluralResolver.getRule('en')),
+})
+```
+## Options
+
+| Key                 | Type                                                  | Default value   |
+|---------------------|-------------------------------------------------------|-----------------|
+| primaryLanguage     | `string`                                              |                 |
+| secondaryLanguages  | `string[]`                                            |                 |
+| localesFolder       | `string`                                              |                 |
+| outputFolder        | `string?`                                              | `localesFolder` |
+| overridePluralRules | `(pluralResolver: PluralResolver)? => PluralResolver` |                 |
+
+
+Currently, the lib supports only `.json` locale files, PR's are welcome :].
+
+## Example
+Given these files:
+```sh
+examples
+├── en
+│   └── namespace.json
+├── he
+│   └── namespace.json
+└── ja
+    └── namespace.json
+```
+```json
+// en/namespace.json
+{
+  "foo_male": "bar-male-en",
+  "room": "room",
+  "room_plural": "rooms"
+}
+```
+```json
+// he/namespace.json
+{
+  "room": "חדר",
+  "foo_male": "bar-male-he",
+  "room_3": "חדרים"
+}
+```
+```json
+// ja/namespace.json
+{
+  "foo_male": "bar-male-ja",
+  "room": "部屋",
+  "room_plural": "部屋"
+}
+```
+Syncying `he` & `ja` against `en`
+```sh
+$ npx i18next-locales-sync -p en -s he ja -l ./examples/
+```
+Will result with
+```json
+// en/namespace.json
+
+// `en` remains untouched
+{
+  "foo_male": "bar-male-en",
+  "room": "room",
+  "room_plural": "rooms"
+}
+```
+```json
+// he/namespace.json
+
+// sorted based on the primary lang file
+// keeps existing plural form (room_3)
+// added missing plural forms
+{
+  "foo_male": "bar-male-he",
+  "room": "חדר",
+  "room_3": "חדרים",
+  "room_0": "rooms",
+  "room_1": "rooms",
+  "room_2": "rooms"
+}
+```
+```json
+// ja/namespace.json
+
+// keeps exising fields
+// removed plural form since there is no plural form in Japanese
+{
+  "foo_male": "bar-male-ja",
+  "room": "部屋"
 }
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+### Prior art
+1. [i18next-json-sync](https://github.com/jwbay/i18next-json-sync)
