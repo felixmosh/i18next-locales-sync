@@ -6,7 +6,7 @@ interface Options {
   localeFiles: LocalesFiles;
   primaryLanguage: string;
   otherLanguages: string[];
-  pluralResolver?: PluralResolver;
+  pluralResolver: PluralResolver;
 }
 
 export function syncLocaleFiles({

@@ -1,8 +1,11 @@
 import path from 'path';
+import { PluralResolver } from '../src/i18next/PluralResolver';
 import { generateLocaleFiles } from '../src/generateLocaleFiles';
 import { syncLocaleFiles } from '../src/syncLocaleFiles';
 
 describe('syncLocaleFiles', () => {
+  const pluralResolver = new PluralResolver();
+
   it('should sync locale files without namespaces', () => {
     const primaryLanguage = 'en';
     const otherLanguages = ['ja'];
@@ -13,7 +16,9 @@ describe('syncLocaleFiles', () => {
       fileExtension: '.json',
     });
 
-    expect(syncLocaleFiles({ localeFiles, primaryLanguage, otherLanguages })).toHaveProperty('ja', {
+    expect(
+      syncLocaleFiles({ localeFiles, primaryLanguage, otherLanguages, pluralResolver })
+    ).toHaveProperty('ja', {
       '': {
         data: { test: 'bla' },
         hash: '',
@@ -32,7 +37,12 @@ describe('syncLocaleFiles', () => {
       fileExtension: '.json',
     });
 
-    const result = syncLocaleFiles({ localeFiles, primaryLanguage, otherLanguages });
+    const result = syncLocaleFiles({
+      localeFiles,
+      primaryLanguage,
+      otherLanguages,
+      pluralResolver,
+    });
 
     expect(result).toHaveProperty('ja', {
       common: {

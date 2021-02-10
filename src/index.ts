@@ -11,7 +11,7 @@ interface SyncLocalesOptions {
   localesFolder: string;
   outputFolder?: string;
   fileExtension?: string;
-  pluralResolver?: PluralResolver;
+  overridePluralRules?: (pluralResolver: PluralResolver) => PluralResolver;
 }
 
 export function syncLocales({
@@ -20,8 +20,14 @@ export function syncLocales({
   localesFolder,
   outputFolder = localesFolder,
   fileExtension = '.json',
-  pluralResolver,
+  overridePluralRules,
 }: SyncLocalesOptions) {
+  const pluralResolver = new PluralResolver();
+
+  if (typeof overridePluralRules === 'function') {
+    overridePluralRules(pluralResolver);
+  }
+
   const localeFiles = generateLocaleFiles({
     primaryLanguage,
     otherLanguages,
@@ -34,6 +40,6 @@ export function syncLocales({
   writeToDisk({ localeFiles, primaryLanguage, otherLanguages, outputFolder, localesFolder });
 
   console.log(
-    chalk.green`${chalk.bold.greenBright(LIB_PREFIX)} '${localesFolder}' was synced successfully.`
+    chalk.green`${chalk.bold.greenBright(LIB_PREFIX)} '${localesFolder}' were synced successfully.`
   );
 }

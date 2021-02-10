@@ -1,12 +1,15 @@
+import { PluralResolver } from '../../src/i18next/PluralResolver';
 import { syncJson } from '../../src/syncJson';
 
 describe('syncJson: basic keys', () => {
+  const pluralResolver = new PluralResolver();
+
   it('should throw exception when the json is too deep', () => {
     const source = { data: { foo: 'foo', nested: { bar: 'bar', array: [1, 2] } }, language: 'en' };
 
-    expect(() => syncJson({ source, target: { data: {}, language: 'he' }, depth: 1 })).toThrowError(
-      'given json with depth that'
-    );
+    expect(() =>
+      syncJson({ source, target: { data: {}, language: 'he' }, depth: 1, pluralResolver })
+    ).toThrowError('given json with depth that');
   });
 
   describe('add', () => {
@@ -15,7 +18,7 @@ describe('syncJson: basic keys', () => {
         data: { foo: 'foo', nested: { bar: 'bar', array: [1, 2] } },
         language: 'en',
       };
-      const actual = syncJson({ source, target: { data: {}, language: 'he' } });
+      const actual = syncJson({ source, target: { data: {}, language: 'he' }, pluralResolver });
 
       expect(actual.data).toStrictEqual(source.data);
       expect(source).toStrictEqual(source);
@@ -32,6 +35,7 @@ describe('syncJson: basic keys', () => {
           data: { foo: 'original foo', nested: { array: [2] } },
           language: 'he',
         },
+        pluralResolver,
       });
 
       expect(result.data).toStrictEqual({
@@ -53,6 +57,7 @@ describe('syncJson: basic keys', () => {
           data: { foo: ['original foo'], nested: { array: { '0': 1 } } },
           language: 'he',
         },
+        pluralResolver,
       });
 
       expect(result.data).toStrictEqual({
@@ -75,6 +80,7 @@ describe('syncJson: basic keys', () => {
           data: { foo: 'he foo', nested: { bar: 'he bar', array: ['he 1', 'he 2', 'he string'] } },
           language: 'he',
         },
+        pluralResolver,
       });
 
       expect(result.data).toStrictEqual({
@@ -101,6 +107,7 @@ describe('syncJson: basic keys', () => {
           },
           language: 'he',
         },
+        pluralResolver,
       });
 
       expect(result.data).toStrictEqual({
@@ -123,7 +130,7 @@ describe('syncJson: basic keys', () => {
         language: 'he',
       };
 
-      const result = syncJson({ source, target });
+      const result = syncJson({ source, target, pluralResolver });
 
       expect(result.data).toStrictEqual({ foo: 't-foo', nested: { bar: 't-bar', array: [3, 2] } });
 

@@ -1,7 +1,10 @@
 {
   "version": "0.1.0",
+  "name": "i18next-locales-sync",
+  "author": "FelixMosh",
   "license": "MIT",
   "main": "dist/index.js",
+  "bin": "dist/cli.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -15,44 +18,26 @@
     "build": "rm -rf dist && tsc",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "npm run build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "prepare": "npm run build"
   },
-  "peerDependencies": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^7.0.0",
+    "fs-extra": "^9.1.0",
+    "glob": "^7.1.6"
   },
-  "name": "i18next-locales-sync",
-  "author": "FelixMosh",
-  "module": "dist/i18next-locales-sync.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/i18next-locales-sync.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/i18next-locales-sync.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.9.2",
     "@types/fs-extra": "^9.0.6",
     "@types/glob": "^7.1.3",
     "husky": "^4.3.0",
     "memfs": "^3.2.0",
-    "size-limit": "^4.9.2",
     "tsdx": "^0.14.1",
     "tslib": "^2.1.0",
     "typescript": "^4.1.4"
   },
-  "dependencies": {
-    "chalk": "^4.1.0",
-    "fs-extra": "^9.1.0",
-    "glob": "^7.1.6",
-    "yargs": "^16.2.0"
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
   }
 }

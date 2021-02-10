@@ -1,6 +1,5 @@
-import { Inputs, JSONObject, JSONValue } from '../types/types';
+import { JSONObject, JSONValue, LocaleObject } from '../types/types';
 import { MAX_DEPTH } from './constats';
-import { LanguageUtil } from './i18next/LanguageUtils';
 import { PluralResolver } from './i18next/PluralResolver';
 import { hasSomePluralSuffix } from './utils/hasSomePluralSuffix';
 import { isObject } from './utils/isObject';
@@ -87,12 +86,14 @@ function syncEntry(sourceLng: string, targetLng: string, pluralResolver: PluralR
   };
 }
 
-export function syncJson({
-  source,
-  target,
-  depth = MAX_DEPTH,
-  pluralResolver = new PluralResolver(new LanguageUtil()),
-}: Inputs) {
+interface SyncJsonOptions {
+  source: LocaleObject;
+  target: LocaleObject;
+  pluralResolver: PluralResolver;
+  depth?: number;
+}
+
+export function syncJson({ source, target, pluralResolver, depth = MAX_DEPTH }: SyncJsonOptions) {
   target.data = traverse(
     source.data,
     target.data,

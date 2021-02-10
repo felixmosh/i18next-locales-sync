@@ -1,12 +1,15 @@
+import { PluralResolver } from '../../src/i18next/PluralResolver';
 import { syncJson } from '../../src/syncJson';
 
 describe('syncJson: plurals', () => {
+  const pluralResolver = new PluralResolver();
+
   it('should add plural form', () => {
     const source = {
       data: { book: 'book en', book_plural: 'books en' },
       language: 'en',
     };
-    const actual = syncJson({ source, target: { data: {}, language: 'he' } });
+    const actual = syncJson({ source, target: { data: {}, language: 'he' }, pluralResolver });
 
     expect(actual.data).toStrictEqual({
       book: 'book en',
@@ -22,7 +25,7 @@ describe('syncJson: plurals', () => {
       data: { book: 'book en', book_plural: 'books en' },
       language: 'en',
     };
-    const actual = syncJson({ source, target: { data: {}, language: 'ja' } });
+    const actual = syncJson({ source, target: { data: {}, language: 'ja' }, pluralResolver });
 
     expect(actual.data).toStrictEqual({ book: 'book en' });
   });
@@ -35,6 +38,7 @@ describe('syncJson: plurals', () => {
     const actual = syncJson({
       source,
       target: { data: { book_plural: 'books de' }, language: 'de' },
+      pluralResolver,
     });
 
     expect(actual.data).toStrictEqual({
@@ -50,7 +54,11 @@ describe('syncJson: plurals', () => {
     };
     const actual = syncJson({
       source,
-      target: { data: { book: 'book de', book_plural: 'books de' }, language: 'de' },
+      target: {
+        data: { book: 'book de', book_plural: 'books de' },
+        language: 'de',
+      },
+      pluralResolver,
     });
 
     expect(actual.data).toStrictEqual({
@@ -70,7 +78,7 @@ describe('syncJson: plurals', () => {
       },
       language: 'he',
     };
-    const actual = syncJson({ source, target: { data: {}, language: 'en' } });
+    const actual = syncJson({ source, target: { data: {}, language: 'en' }, pluralResolver });
 
     expect(actual.data).toStrictEqual({ book: 'book he', book_plural: 'books 3 he' });
   });
@@ -91,6 +99,7 @@ describe('syncJson: plurals', () => {
         },
         language: 'en',
       },
+      pluralResolver,
     });
 
     expect(actual.data).toStrictEqual({

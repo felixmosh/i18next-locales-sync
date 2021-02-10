@@ -284,8 +284,10 @@ function createRules(): RuleSet {
 export class PluralResolver {
   private readonly rules: RuleSet;
   private options: PluralResolverOptions;
+  private languageUtils: LanguageUtil;
 
-  constructor(private languageUtils: LanguageUtil, options: PluralResolverOptions = {}) {
+  constructor(options: PluralResolverOptions = {}) {
+    this.languageUtils = new LanguageUtil();
     this.options = { ...defaultOptions, ...options };
     this.rules = createRules();
   }
