@@ -30,12 +30,12 @@ describe('syncLocales - E2E', () => {
   it('should sync locale files with namespaces', () => {
     const primaryLanguage = 'en';
     const otherLanguages = ['ja', 'he', 'de'];
-    const outputFolder = '/mem-fs/output/fixture2';
+    const outputFolder = path.resolve('./test/output/fixture2');
 
     syncLocales({
       primaryLanguage,
       secondaryLanguages: otherLanguages,
-      localesFolder: '/mem-fs/fixtures/fixture2',
+      localesFolder: path.resolve('./test/fixtures/fixture2'),
       outputFolder,
       fileExtension: '.json',
     });

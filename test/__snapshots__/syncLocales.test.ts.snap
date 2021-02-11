@@ -15,14 +15,14 @@ Object {
 
 exports[`syncLocales - E2E should sync locale files with namespaces 1`] = `
 Object {
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/de/common.json": "{\\"test\\":\\"bla-de\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/de/front.json": "{\\"title\\":\\"front\\"}",
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/en/common.json": "{\\"test\\":\\"bla\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/en/front.json": "{\\"title\\":\\"front\\"}",
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/he/common.json": "{\\"test\\":\\"bla\\",\\"test_0\\":\\"bla-plural\\",\\"test_1\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/he/front.json": "{\\"title\\":\\"front\\"}",
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/ja/common.json": "{\\"test\\":\\"bla\\"}",
-  "/Users/catz/Projects/oss/i18next-locales-sync/test/output/fixture2/ja/front.json": "{\\"title\\":\\"front\\"}",
+  "test/output/fixture2/de/common.json": "{\\"test\\":\\"bla-de\\",\\"test_plural\\":\\"bla-plural\\"}",
+  "test/output/fixture2/de/front.json": "{\\"title\\":\\"front\\"}",
+  "test/output/fixture2/en/common.json": "{\\"test\\":\\"bla\\",\\"test_plural\\":\\"bla-plural\\"}",
+  "test/output/fixture2/en/front.json": "{\\"title\\":\\"front\\"}",
+  "test/output/fixture2/he/common.json": "{\\"test\\":\\"bla\\",\\"test_0\\":\\"bla-plural\\",\\"test_1\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
+  "test/output/fixture2/he/front.json": "{\\"title\\":\\"front\\"}",
+  "test/output/fixture2/ja/common.json": "{\\"test\\":\\"bla\\"}",
+  "test/output/fixture2/ja/front.json": "{\\"title\\":\\"front\\"}",
 }
 `;
 
