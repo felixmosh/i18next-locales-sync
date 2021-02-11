@@ -30,7 +30,7 @@ function extractNamespaceFromPath(filepath: string, language: string, fileExtens
 
   const namespaceParts = pathParts.filter((part) => !part.startsWith(language));
 
-  return namespaceParts.join(path.sep);
+  return namespaceParts.join('/');
 }
 
 function addMissingLanguages(localeFiles: LocalesFiles, otherLanguages: string[]) {
