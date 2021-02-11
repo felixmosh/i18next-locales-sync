@@ -25,9 +25,7 @@ describe('generateLocaleFiles', () => {
       '': {
         data: {},
         hash: '',
-        filePath: expect.stringContaining(
-          '/test/fixtures/fixture1/ja.json'.replace(/[\/]/g, path.sep)
-        ),
+        filePath: expect.stringMatching('fixtures/fixture1/ja.json'.replace(/[/]/g, '[\\\\/]+')),
       },
     });
   });
@@ -44,12 +42,16 @@ describe('generateLocaleFiles', () => {
       common: {
         data: { test: 'bla-de' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture2/de/common.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture2/de/common.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
       front: {
         data: {},
         hash: '',
-        filePath: expect.stringContaining('/fixture2/de/front.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture2/de/front.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
     });
 
@@ -57,12 +59,16 @@ describe('generateLocaleFiles', () => {
       common: {
         data: {},
         hash: '',
-        filePath: expect.stringContaining('/fixture2/ja/common.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture2/ja/common.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
       front: {
         data: {},
         hash: '',
-        filePath: expect.stringContaining('/fixture2/ja/front.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture2/ja/front.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
     });
   });
@@ -79,17 +85,23 @@ describe('generateLocaleFiles', () => {
       common: {
         data: { test: 'bla', test_plural: 'bla-plural' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture3/en/common.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture3/en/common.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
       'nested/a': {
         data: { a: 'bla-en' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture3/en/nested/a.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture3/en/nested/a.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
       'nested/b': {
         data: { b: 'bla-en' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture3/en/nested/b.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture3/en/nested/b.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
     });
 
@@ -97,17 +109,23 @@ describe('generateLocaleFiles', () => {
       common: {
         data: { test: 'bla-de' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture3/de/common.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture3/de/common.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
       'nested/a': {
         data: { a: 'bla-de' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture3/de/nested/a.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture3/de/nested/a.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
       'nested/b': {
         data: {},
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture3/de/nested/b.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture3/de/nested/b.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
     });
   });
@@ -124,12 +142,16 @@ describe('generateLocaleFiles', () => {
       common: {
         data: { test: 'bla-he', test_1: 'bla-1' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture4/common/he.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture4/common/he.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
       front: {
         data: { test: 'bla', test_0: 'bla-0' },
         hash: expect.any(String),
-        filePath: expect.stringContaining('/fixture4/front/he.json'),
+        filePath: expect.stringMatching(
+          'fixtures/fixture4/front/he.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
       },
     });
   });
