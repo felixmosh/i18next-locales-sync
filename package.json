@@ -2,6 +2,11 @@
   "version": "1.0.0",
   "name": "i18next-locales-sync",
   "description": "Syncs i18next locale resource files against a primary language.\n",
+  "keywords": [
+    "i18next",
+    "locale",
+    "sync"
+  ],
   "author": "FelixMosh",
   "license": "MIT",
   "main": "dist/index.js",
