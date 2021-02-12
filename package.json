@@ -7,8 +7,14 @@
     "locale",
     "sync"
   ],
-  "author": "FelixMosh",
+  "author": "felixmosh",
   "license": "MIT",
+  "homepage": "https://github.com/felixmosh/i18next-locales-sync",
+  "bugs": "https://github.com/felixmosh/i18next-locales-sync/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felixmosh/i18next-locales-sync"
+  },
   "main": "dist/index.js",
   "bin": "dist/cli.js",
   "typings": "dist/index.d.ts",
