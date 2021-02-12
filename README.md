@@ -13,7 +13,7 @@ $ npm install --save-dev i18next-locales-sync
 
 ## Features
 
-1. Supports (namespaces)[https://www.i18next.com/principles/namespaces].
+1. Supports [namespaces](https://www.i18next.com/principles/namespaces).
 2. Full plural support, based on the real [i18next pluralResolver](https://github.com/felixmosh/i18next-locales-sync/blob/master/src/i18next/PluralResolver.ts).
 3. Sorting secondary locale keys by primary language order.
 4. Supports multiple locale folder structure, `{lng}/{namespace}`, `{namespace}/{lng}`.  
