@@ -61,11 +61,11 @@ syncLocales({
 | primaryLanguage     | `string`                                              |                 |
 | secondaryLanguages  | `string[]`                                            |                 |
 | localesFolder       | `string`                                              |                 |
-| outputFolder        | `string?`                                              | `localesFolder` |
+| outputFolder        | `string?`                                             | `localesFolder` |
 | overridePluralRules | `(pluralResolver: PluralResolver)? => PluralResolver` |                 |
 
 
-Currently, the lib supports only `.json` locale files, PR's are welcome :].
+Currently, the lib supports only `.json` locale files, PRs are welcome :].
 
 ## Example
 Given these files:
