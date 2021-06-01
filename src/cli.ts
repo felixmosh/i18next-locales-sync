@@ -39,6 +39,14 @@ const options = yargs.usage('i18next-locales-sync -p en -s de ja he -l ./path/to
     type: 'string',
     normalize: true,
   },
+  useEmptyString: {
+    alias: 'e',
+    description: 'Use empty string as a value for new keys',
+    type: 'boolean',
+    normalize: true,
+    default: false,
+    defaultDescription: '`false`',
+  },
 }).argv;
 
 if (options.config) {
@@ -74,4 +82,5 @@ syncLocales({
   localesFolder: options.localesFolder,
   outputFolder: options.outputFolder,
   overridePluralRules: options.overridePluralRules as any,
+  useEmptyString: options.useEmptyString,
 });

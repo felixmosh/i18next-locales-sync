@@ -7,6 +7,7 @@ interface Options {
   primaryLanguage: string;
   otherLanguages: string[];
   pluralResolver: PluralResolver;
+  useEmptyString?: boolean;
 }
 
 export function syncLocaleFiles({
@@ -14,6 +15,7 @@ export function syncLocaleFiles({
   primaryLanguage,
   otherLanguages,
   pluralResolver,
+  useEmptyString,
 }: Options): LocalesFiles {
   const primaryLocaleFiles = localeFiles[primaryLanguage];
   otherLanguages.forEach((currentLanguage) => {
@@ -24,6 +26,7 @@ export function syncLocaleFiles({
         source: { data: primaryLocaleFiles[primaryNamespace].data, language: primaryLanguage },
         target: { data: currentNamespaces[primaryNamespace].data, language: currentLanguage },
         pluralResolver,
+        useEmptyString,
       });
 
       currentNamespaces[primaryNamespace].data = data;

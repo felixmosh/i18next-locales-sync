@@ -140,4 +140,25 @@ describe('syncJson: basic keys', () => {
       );
     });
   });
+
+  describe('useEmptyString = true', () => {
+    it('should add missing keys in json and use empty string', () => {
+      const source = {
+        data: { foo: 'foo', nested: { bar: 'bar', array: [1, 2] } },
+        language: 'en',
+      };
+      const actual = syncJson({
+        source,
+        target: { data: { foo: 'he foo' }, language: 'he' },
+        pluralResolver,
+        useEmptyString: true,
+      });
+
+      expect(actual.data).toStrictEqual({
+        foo: 'he foo',
+        nested: { bar: '', array: ['', ''] },
+      });
+      expect(source).toStrictEqual(source);
+    });
+  });
 });
