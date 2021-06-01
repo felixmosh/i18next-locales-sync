@@ -63,6 +63,7 @@ syncLocales({
 | localesFolder       | `string`                                              |                 |
 | outputFolder        | `string?`                                             | `localesFolder` |
 | overridePluralRules | `(pluralResolver: PluralResolver)? => PluralResolver` |                 |
+| useEmptyString      | `boolean`                                             |  `false`        |
 
 
 Currently, the lib supports only `.json` locale files, PRs are welcome :].

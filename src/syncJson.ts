@@ -18,26 +18,38 @@ function generatePluralForms(
     targetObject: JSONObject;
     newTargetObject: JSONObject;
     sourceKey: string;
-    sourceValue: JSONValue;
-    targetValue: JSONValue;
     sourceLng: string;
     targetLng: string;
   },
-  pluralResolver: PluralResolver
+  pluralResolver: PluralResolver,
+  useEmptyString = false
 ) {
   const singularSourceKey = pluralResolver.getSingularFormOfKey(sourceKey, sourceLng);
 
   const pluralForms = pluralResolver.getPluralFormsOfKey(singularSourceKey, targetLng);
+  const fallbackValue = useEmptyString ? '' : sourceObject[sourceKey];
 
   pluralForms.forEach((key) => {
     newTargetObject[key] =
       (targetObject && targetObject[key] && !isObject(targetObject[key])
         ? targetObject[key]
-        : sourceObject[key]) || sourceObject[sourceKey];
+        : useEmptyString
+        ? ''
+        : sourceObject[key]) || fallbackValue;
   });
 }
 
-function syncEntry(sourceLng: string, targetLng: string, pluralResolver: PluralResolver) {
+function syncEntry({
+  sourceLng,
+  targetLng,
+  pluralResolver,
+  useEmptyString,
+}: {
+  sourceLng: string;
+  targetLng: string;
+  pluralResolver: PluralResolver;
+  useEmptyString?: boolean;
+}) {
   const sourceSuffixes = pluralResolver.getPluralFormsOfKey('', sourceLng).filter(Boolean);
   const targetSuffixes = pluralResolver.getPluralFormsOfKey('', targetLng).filter(Boolean);
 
@@ -62,17 +74,16 @@ function syncEntry(sourceLng: string, targetLng: string, pluralResolver: PluralR
             sourceObject,
             targetObject,
             newTargetObject,
-            sourceValue,
-            targetValue,
             sourceKey,
             sourceLng,
             targetLng,
           },
-          pluralResolver
+          pluralResolver,
+          useEmptyString
         );
     } else {
       newTargetObject[sourceKey] =
-        targetValue && !isObject(targetValue) ? targetValue : sourceValue;
+        targetValue && !isObject(targetValue) ? targetValue : useEmptyString ? '' : sourceValue;
 
       // keeps existing plural forms
       targetSuffixes.forEach((suffix) => {
@@ -91,13 +102,25 @@ interface SyncJsonOptions {
   target: LocaleObject;
   pluralResolver: PluralResolver;
   depth?: number;
+  useEmptyString?: boolean;
 }
 
-export function syncJson({ source, target, pluralResolver, depth = MAX_DEPTH }: SyncJsonOptions) {
+export function syncJson({
+  source,
+  target,
+  pluralResolver,
+  depth = MAX_DEPTH,
+  useEmptyString = false,
+}: SyncJsonOptions) {
   target.data = traverse(
     source.data,
     target.data,
-    syncEntry(source.language, target.language, pluralResolver),
+    syncEntry({
+      sourceLng: source.language,
+      targetLng: target.language,
+      pluralResolver,
+      useEmptyString,
+    }),
     depth
   );
 

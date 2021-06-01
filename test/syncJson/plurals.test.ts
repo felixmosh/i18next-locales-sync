@@ -20,6 +20,27 @@ describe('syncJson: plurals', () => {
     });
   });
 
+  it('should add plural form with empty string as a value', () => {
+    const source = {
+      data: { book: 'book en', book_plural: 'books en' },
+      language: 'en',
+    };
+    const actual = syncJson({
+      source,
+      target: { data: { book_0: 'book he 0' }, language: 'he' },
+      pluralResolver,
+      useEmptyString: true,
+    });
+
+    expect(actual.data).toStrictEqual({
+      book: '',
+      book_0: 'book he 0',
+      book_1: '',
+      book_2: '',
+      book_3: '',
+    });
+  });
+
   it('should add plural form only if the target language needs it', () => {
     const source = {
       data: { book: 'book en', book_plural: 'books en' },
@@ -64,6 +85,27 @@ describe('syncJson: plurals', () => {
     expect(actual.data).toStrictEqual({
       book: 'book de',
       book_plural: 'books de',
+    });
+  });
+
+  it('should not override existing values', () => {
+    const source = {
+      data: { book: 'book en', book_plural: 'books en' },
+      language: 'en',
+    };
+    const actual = syncJson({
+      source,
+      target: {
+        data: { book: 'book de' },
+        language: 'de',
+      },
+      pluralResolver,
+      useEmptyString: true,
+    });
+
+    expect(actual.data).toStrictEqual({
+      book: 'book de',
+      book_plural: '',
     });
   });
 
