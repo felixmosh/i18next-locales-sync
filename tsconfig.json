@@ -5,7 +5,7 @@
     "lib": [
       "esnext"
     ],
-    "importHelpers": true,
+    "importHelpers": false,
     // output .d.ts declaration files for consumers
     "declaration": true,
     // match output dir to input dir. e.g. dist/index instead of dist/src/index
