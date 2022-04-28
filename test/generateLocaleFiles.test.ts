@@ -1,4 +1,4 @@
-import path from 'path';
+import { resolve } from 'path';
 import { generateLocaleFiles } from '../src/generateLocaleFiles';
 
 describe('generateLocaleFiles', () => {
@@ -7,7 +7,7 @@ describe('generateLocaleFiles', () => {
       generateLocaleFiles({
         primaryLanguage: 'ja',
         otherLanguages: ['en'],
-        localesFolder: path.resolve('./test/fixtures/fixture1'),
+        localesFolder: resolve('./test/fixtures/fixture1'),
         fileExtension: '.json',
       })
     ).toThrowError('There are no files for your primary language');
@@ -17,7 +17,7 @@ describe('generateLocaleFiles', () => {
     const localeFiles = generateLocaleFiles({
       primaryLanguage: 'en',
       otherLanguages: ['ja'],
-      localesFolder: path.resolve('./test/fixtures/fixture1'),
+      localesFolder: resolve('./test/fixtures/fixture1'),
       fileExtension: '.json',
     });
 
@@ -34,7 +34,7 @@ describe('generateLocaleFiles', () => {
     const localeFiles = generateLocaleFiles({
       primaryLanguage: 'en',
       otherLanguages: ['de', 'ja'],
-      localesFolder: path.resolve('./test/fixtures/fixture2'),
+      localesFolder: resolve('./test/fixtures/fixture2'),
       fileExtension: '.json',
     });
 
@@ -77,7 +77,7 @@ describe('generateLocaleFiles', () => {
     const localeFiles = generateLocaleFiles({
       primaryLanguage: 'en',
       otherLanguages: ['de'],
-      localesFolder: path.resolve('./test/fixtures/fixture3'),
+      localesFolder: resolve('./test/fixtures/fixture3'),
       fileExtension: '.json',
     });
 
@@ -134,7 +134,7 @@ describe('generateLocaleFiles', () => {
     const localeFiles = generateLocaleFiles({
       primaryLanguage: 'en',
       otherLanguages: ['he'],
-      localesFolder: path.resolve('./test/fixtures/fixture4'),
+      localesFolder: resolve('./test/fixtures/fixture4'),
       fileExtension: '.json',
     });
 

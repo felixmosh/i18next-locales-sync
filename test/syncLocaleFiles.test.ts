@@ -1,4 +1,4 @@
-import path from 'path';
+import { resolve } from 'path';
 import { PluralResolver } from '../src/i18next/PluralResolver';
 import { generateLocaleFiles } from '../src/generateLocaleFiles';
 import { syncLocaleFiles } from '../src/syncLocaleFiles';
@@ -12,7 +12,7 @@ describe('syncLocaleFiles', () => {
     const localeFiles = generateLocaleFiles({
       primaryLanguage,
       otherLanguages,
-      localesFolder: path.resolve('./test/fixtures/fixture1'),
+      localesFolder: resolve('./test/fixtures/fixture1'),
       fileExtension: '.json',
     });
 
@@ -22,7 +22,7 @@ describe('syncLocaleFiles', () => {
       '': {
         data: { test: 'bla' },
         hash: '',
-        filePath: path.resolve('./test/fixtures/fixture1/ja.json'),
+        filePath: resolve('./test/fixtures/fixture1/ja.json'),
       },
     });
   });
@@ -33,7 +33,7 @@ describe('syncLocaleFiles', () => {
     const localeFiles = generateLocaleFiles({
       primaryLanguage,
       otherLanguages,
-      localesFolder: path.resolve('./test/fixtures/fixture2'),
+      localesFolder: resolve('./test/fixtures/fixture2'),
       fileExtension: '.json',
     });
 
@@ -48,12 +48,12 @@ describe('syncLocaleFiles', () => {
       common: {
         data: { test: 'bla' },
         hash: '',
-        filePath: path.resolve('./test/fixtures/fixture2/ja/common.json'),
+        filePath: resolve('./test/fixtures/fixture2/ja/common.json'),
       },
       front: {
         data: { title: 'front' },
         hash: '',
-        filePath: path.resolve('./test/fixtures/fixture2/ja/front.json'),
+        filePath: resolve('./test/fixtures/fixture2/ja/front.json'),
       },
     });
 
@@ -66,7 +66,7 @@ describe('syncLocaleFiles', () => {
       front: {
         data: { title: 'front' },
         hash: '',
-        filePath: path.resolve('./test/fixtures/fixture2/de/front.json'),
+        filePath: resolve('./test/fixtures/fixture2/de/front.json'),
       },
     });
   });
