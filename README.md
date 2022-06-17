@@ -16,17 +16,20 @@ $ npm install --save-dev i18next-locales-sync
 1. Supports [namespaces](https://www.i18next.com/principles/namespaces).
 2. Full plural support, based on the real [i18next pluralResolver](https://github.com/felixmosh/i18next-locales-sync/blob/master/src/i18next/PluralResolver.ts).
 3. Sorting secondary locale keys by primary language order.
-4. Supports multiple locale folder structure, `{lng}/{namespace}`, `{namespace}/{lng}`.  
+4. Supports multiple locale folder structure, `{lng}/{namespace}`, `{namespace}/{lng}`.
 5. Creates missing locale files.
 6. Allows overriding plural rules.
 
 ## Usage
 
 ### 1. CLI
+
 ```sh
 $ npx i18next-locales-sync -p he -s en de ja -l path/to/locales/folder
 ```
+
 or using config file
+
 ```js
 // localesSync.config.js
 module.exports = {
@@ -37,11 +40,13 @@ module.exports = {
     pluralResolver.addRule('he', pluralResolver.getRule('en')), // This is available only when using config file
 };
 ```
+
 ```sh
 $ npx i18next-locales-sync -c ./localesSync.config.js
 ```
 
 ### 2. Node
+
 ```js
 import { syncLocales } from 'i18next-locales-sync';
 import path from 'path';
@@ -52,24 +57,27 @@ syncLocales({
   localesFolder: path.resolve('./path/to/locales/folder'),
   overridePluralRules: (pluralResolver) =>
     pluralResolver.addRule('he', pluralResolver.getRule('en')),
-})
+});
 ```
+
 ## Options
 
 | Key                 | Type                                                  | Default value   |
-|---------------------|-------------------------------------------------------|-----------------|
+| ------------------- | ----------------------------------------------------- | --------------- |
 | primaryLanguage     | `string`                                              |                 |
 | secondaryLanguages  | `string[]`                                            |                 |
 | localesFolder       | `string`                                              |                 |
 | outputFolder        | `string?`                                             | `localesFolder` |
 | overridePluralRules | `(pluralResolver: PluralResolver)? => PluralResolver` |                 |
-| useEmptyString      | `boolean`                                             |  `false`        |
-
+| useEmptyString      | `boolean`                                             | `false`         |
+| spaces              | `number`                                              | `2`             |
 
 Currently, the lib supports only `.json` locale files, PRs are welcome :].
 
 ## Example
+
 Given these files:
+
 ```sh
 examples
 ├── en
@@ -79,6 +87,7 @@ examples
 └── ja
     └── namespace.json
 ```
+
 ```json
 // en/namespace.json
 {
@@ -87,6 +96,7 @@ examples
   "room_plural": "rooms"
 }
 ```
+
 ```json
 // he/namespace.json
 {
@@ -95,6 +105,7 @@ examples
   "room_3": "חדרים"
 }
 ```
+
 ```json
 // ja/namespace.json
 {
@@ -103,11 +114,15 @@ examples
   "room_plural": "部屋"
 }
 ```
+
 Syncying `he` & `ja` against `en`
+
 ```sh
 $ npx i18next-locales-sync -p en -s he ja -l ./examples/
 ```
+
 Will result with
+
 ```json
 // en/namespace.json
 
@@ -118,6 +133,7 @@ Will result with
   "room_plural": "rooms"
 }
 ```
+
 ```json
 // he/namespace.json
 
@@ -133,6 +149,7 @@ Will result with
   "room_2": "rooms"
 }
 ```
+
 ```json
 // ja/namespace.json
 
@@ -145,4 +162,5 @@ Will result with
 ```
 
 ### Prior art
+
 1. [i18next-json-sync](https://github.com/jwbay/i18next-json-sync)
