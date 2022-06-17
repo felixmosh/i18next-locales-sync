@@ -25,7 +25,7 @@ $ npm install --save-dev i18next-locales-sync
 ### 1. CLI
 
 ```sh
-$ npx i18next-locales-sync -p he -s en de ja -l path/to/locales/folder
+$ npx i18next-locales-sync -p he -s en de ja -l path/to/locales/folder -sp 2
 ```
 
 or using config file
@@ -38,6 +38,7 @@ module.exports = {
   localesFolder: './path/to/locales/folder',
   overridePluralRules: (pluralResolver) =>
     pluralResolver.addRule('he', pluralResolver.getRule('en')), // This is available only when using config file
+  spaces: 2,
 };
 ```
 
