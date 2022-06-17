@@ -13,6 +13,7 @@ interface SyncLocalesOptions {
   fileExtension?: string;
   overridePluralRules?: (pluralResolver: PluralResolver) => PluralResolver;
   useEmptyString?: boolean;
+  spaces?: number;
 }
 
 export function syncLocales({
@@ -23,6 +24,7 @@ export function syncLocales({
   overridePluralRules,
   fileExtension = '.json',
   useEmptyString = false,
+  spaces = 2,
 }: SyncLocalesOptions) {
   const pluralResolver = new PluralResolver();
 
@@ -51,6 +53,7 @@ export function syncLocales({
     otherLanguages,
     outputFolder,
     localesFolder,
+    spaces,
   });
 
   console.log(

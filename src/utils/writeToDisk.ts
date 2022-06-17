@@ -9,6 +9,7 @@ interface Options {
   otherLanguages: string[];
   outputFolder: string;
   localesFolder: string;
+  spaces: number;
 }
 
 export function writeToDisk({
@@ -17,6 +18,7 @@ export function writeToDisk({
   otherLanguages,
   localesFolder,
   outputFolder,
+  spaces,
 }: Options) {
   const primaryLocaleFile = localeFiles[primaryLanguage];
 
@@ -38,7 +40,7 @@ export function writeToDisk({
       ) {
         fs.ensureFileSync(outputFilePath);
         fs.writeJSONSync(outputFilePath, otherLanguageLocaleFile.data, {
-          spaces: 2,
+          spaces: spaces,
           encoding: 'utf-8',
         });
       }
