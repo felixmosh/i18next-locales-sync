@@ -40,7 +40,7 @@ export function writeToDisk({
       ) {
         fs.ensureFileSync(outputFilePath);
         fs.writeJSONSync(outputFilePath, otherLanguageLocaleFile.data, {
-          spaces: spaces,
+          spaces,
           encoding: 'utf-8',
         });
       }

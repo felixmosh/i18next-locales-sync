@@ -7,56 +7,54 @@ import { LIB_PREFIX } from './constats';
 import chalk from 'chalk';
 import { syncLocales } from './index';
 
-const options = yargs
-  .usage('i18next-locales-sync -p en -s de ja he -l ./path/to/locales -sp 2')
-  .option({
-    primaryLanguage: {
-      alias: 'p',
-      type: 'string',
-      description: 'The primary (source) language',
-      default: 'en',
-    },
-    secondaryLanguages: {
-      alias: 's',
-      description: 'A list of all other supported languages',
-      type: 'array',
-      default: [],
-    },
-    localesFolder: {
-      alias: 'l',
-      description: 'The locals folder path (can be relative)',
-      type: 'string',
-      normalize: true,
-    },
-    outputFolder: {
-      alias: 'o',
-      description: 'The output folder',
-      defaultDescription: '`localesFolder`',
-      type: 'string',
-      normalize: true,
-    },
-    config: {
-      alias: 'c',
-      description: 'A path to the config file',
-      type: 'string',
-      normalize: true,
-    },
-    useEmptyString: {
-      alias: 'e',
-      description: 'Use empty string as a value for new keys',
-      type: 'boolean',
-      normalize: true,
-      default: false,
-      defaultDescription: '`false`',
-    },
-    spaces: {
-      alias: 'sp',
-      description: 'Number of indentation spaces in json output',
-      type: 'number',
-      normalize: true,
-      default: 2,
-    },
-  }).argv;
+const options = yargs.usage('i18next-locales-sync -p en -s de ja he -l ./path/to/locales').option({
+  primaryLanguage: {
+    alias: 'p',
+    type: 'string',
+    description: 'The primary (source) language',
+    default: 'en',
+  },
+  secondaryLanguages: {
+    alias: 's',
+    description: 'A list of all other supported languages',
+    type: 'array',
+    default: [],
+  },
+  localesFolder: {
+    alias: 'l',
+    description: 'The locals folder path (can be relative)',
+    type: 'string',
+    normalize: true,
+  },
+  outputFolder: {
+    alias: 'o',
+    description: 'The output folder',
+    defaultDescription: '`localesFolder`',
+    type: 'string',
+    normalize: true,
+  },
+  config: {
+    alias: 'c',
+    description: 'A path to the config file',
+    type: 'string',
+    normalize: true,
+  },
+  useEmptyString: {
+    alias: 'e',
+    description: 'Use empty string as a value for new keys',
+    type: 'boolean',
+    normalize: true,
+    default: false,
+    defaultDescription: '`false`',
+  },
+  spaces: {
+    alias: 'sp',
+    description: 'Number of indentation spaces in json output',
+    type: 'number',
+    normalize: true,
+    default: 2,
+  },
+}).argv;
 
 if (options.config) {
   options.config = path.resolve(options.config);
