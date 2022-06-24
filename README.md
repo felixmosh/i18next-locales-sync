@@ -25,7 +25,7 @@ $ npm install --save-dev i18next-locales-sync
 ### 1. CLI
 
 ```sh
-$ npx i18next-locales-sync -p he -s en de ja -l path/to/locales/folder -sp 2
+$ npx i18next-locales-sync -p he -s en de ja -l path/to/locales/folder --spaces 2
 ```
 
 or using config file

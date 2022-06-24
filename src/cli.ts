@@ -48,7 +48,6 @@ const options = yargs.usage('i18next-locales-sync -p en -s de ja he -l ./path/to
     defaultDescription: '`false`',
   },
   spaces: {
-    alias: 'sp',
     description: 'Number of indentation spaces in json output',
     type: 'number',
     normalize: true,
