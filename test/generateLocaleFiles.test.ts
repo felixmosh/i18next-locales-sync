@@ -40,7 +40,7 @@ describe('generateLocaleFiles', () => {
 
     expect(localeFiles).toHaveProperty('de', {
       common: {
-        data: { test: 'bla-de' },
+        data: { test: 'bla-de', test_one: 'bla-de' },
         hash: expect.any(String),
         filePath: expect.stringMatching(
           'fixtures/fixture2/de/common.json'.replace(/[/]/g, '[\\\\/]+')
@@ -83,7 +83,7 @@ describe('generateLocaleFiles', () => {
 
     expect(localeFiles).toHaveProperty('en', {
       common: {
-        data: { test: 'bla', test_plural: 'bla-plural' },
+        data: { test: 'bla en', test_one: 'bla one en', test_other: 'bla other en' },
         hash: expect.any(String),
         filePath: expect.stringMatching(
           'fixtures/fixture3/en/common.json'.replace(/[/]/g, '[\\\\/]+')
@@ -140,14 +140,14 @@ describe('generateLocaleFiles', () => {
 
     expect(localeFiles).toHaveProperty('he', {
       common: {
-        data: { test: 'bla-he', test_1: 'bla-1' },
+        data: { test: 'bla-he', test_many: 'bla-many' },
         hash: expect.any(String),
         filePath: expect.stringMatching(
           'fixtures/fixture4/common/he.json'.replace(/[/]/g, '[\\\\/]+')
         ),
       },
       front: {
-        data: { test: 'bla', test_0: 'bla-0' },
+        data: { test: 'bla', test_few: 'bla-few' },
         hash: expect.any(String),
         filePath: expect.stringMatching(
           'fixtures/fixture4/front/he.json'.replace(/[/]/g, '[\\\\/]+')
