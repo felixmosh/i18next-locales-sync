@@ -1,68 +1,240 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`syncLocales - E2E should sync locale files with custom spaces 1`] = `
+Object {
+  "test/output/with-spaces/common/de.json": "{
+    \\"test\\": \\"bla-en\\",
+    \\"test_plural\\": \\"bla-plural-en\\"
+}",
+  "test/output/with-spaces/common/en.json": "{
+    \\"test\\": \\"bla-en\\",
+    \\"test_plural\\": \\"bla-plural-en\\"
+}",
+  "test/output/with-spaces/common/he.json": "{
+    \\"test\\": \\"bla-he\\",
+    \\"test_plural\\": \\"bla-plural-en\\"
+}",
+  "test/output/with-spaces/common/ja.json": "{
+    \\"test\\": \\"bla-en\\",
+    \\"test_plural\\": \\"bla-plural-en\\"
+}",
+  "test/output/with-spaces/front/de.json": "{
+    \\"test\\": \\"bla-en\\"
+}",
+  "test/output/with-spaces/front/en.json": "{
+    \\"test\\": \\"bla-en\\"
+}",
+  "test/output/with-spaces/front/he.json": "{
+    \\"test\\": \\"bla\\"
+}",
+  "test/output/with-spaces/front/ja.json": "{
+    \\"test\\": \\"bla-en\\"
+}",
+}
+`;
+
+exports[`syncLocales - E2E should sync locale files with deprecated compatibilityJSON 1`] = `
+Object {
+  "test/output/fixture5/common/de.json": "{
+  \\"test\\": \\"bla-en\\",
+  \\"test_plural\\": \\"bla-plural-en\\"
+}",
+  "test/output/fixture5/common/en.json": "{
+  \\"test\\": \\"bla-en\\",
+  \\"test_plural\\": \\"bla-plural-en\\"
+}",
+  "test/output/fixture5/common/he.json": "{
+  \\"test\\": \\"bla-he\\",
+  \\"test_1\\": \\"bla-1-he\\",
+  \\"test_0\\": \\"bla-plural-en\\",
+  \\"test_2\\": \\"bla-plural-en\\",
+  \\"test_3\\": \\"bla-plural-en\\"
+}",
+  "test/output/fixture5/common/ja.json": "{
+  \\"test\\": \\"bla-en\\"
+}",
+  "test/output/fixture5/front/de.json": "{
+  \\"test\\": \\"bla-en\\"
+}",
+  "test/output/fixture5/front/en.json": "{
+  \\"test\\": \\"bla-en\\"
+}",
+  "test/output/fixture5/front/he.json": "{
+  \\"test\\": \\"bla\\",
+  \\"test_0\\": \\"bla-0\\"
+}",
+  "test/output/fixture5/front/ja.json": "{
+  \\"test\\": \\"bla-en\\"
+}",
+}
+`;
+
 exports[`syncLocales - E2E should sync locale files with different folder structure 1`] = `
 Object {
-  "test/output/fixture4/common/de.json": "{\\"test\\":\\"bla-en\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture4/common/en.json": "{\\"test\\":\\"bla-en\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture4/common/he.json": "{\\"test\\":\\"bla-he\\",\\"test_1\\":\\"bla-1\\",\\"test_0\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
-  "test/output/fixture4/common/ja.json": "{\\"test\\":\\"bla-en\\"}",
-  "test/output/fixture4/front/de.json": "{\\"test\\":\\"bla-he\\"}",
-  "test/output/fixture4/front/en.json": "{\\"test\\":\\"bla-he\\"}",
-  "test/output/fixture4/front/he.json": "{\\"test\\":\\"bla\\",\\"test_0\\":\\"bla-0\\"}",
-  "test/output/fixture4/front/ja.json": "{\\"test\\":\\"bla-he\\"}",
+  "test/output/fixture4/common/de.json": "{
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture4/common/en.json": "{
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture4/common/he.json": "{
+  \\"test\\": \\"bla-he\\",
+  \\"test_many\\": \\"bla-many\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_two\\": \\"bla other en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture4/common/ja.json": "{
+  \\"test\\": \\"bla en\\"
+}",
+  "test/output/fixture4/front/de.json": "{
+  \\"test\\": \\"bla-en\\"
+}",
+  "test/output/fixture4/front/en.json": "{
+  \\"test\\": \\"bla-en\\"
+}",
+  "test/output/fixture4/front/he.json": "{
+  \\"test\\": \\"bla\\"
+}",
+  "test/output/fixture4/front/ja.json": "{
+  \\"test\\": \\"bla-en\\"
+}",
 }
 `;
 
 exports[`syncLocales - E2E should sync locale files with namespaces 1`] = `
 Object {
-  "test/output/fixture2/de/common.json": "{\\"test\\":\\"bla-de\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture2/de/front.json": "{\\"title\\":\\"front\\"}",
-  "test/output/fixture2/en/common.json": "{\\"test\\":\\"bla\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture2/en/front.json": "{\\"title\\":\\"front\\"}",
-  "test/output/fixture2/he/common.json": "{\\"test\\":\\"bla\\",\\"test_0\\":\\"bla-plural\\",\\"test_1\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
-  "test/output/fixture2/he/front.json": "{\\"title\\":\\"front\\"}",
-  "test/output/fixture2/ja/common.json": "{\\"test\\":\\"bla\\"}",
-  "test/output/fixture2/ja/front.json": "{\\"title\\":\\"front\\"}",
+  "test/output/fixture2/de/common.json": "{
+  \\"test\\": \\"bla-de\\",
+  \\"test_one\\": \\"bla-de\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture2/de/front.json": "{
+  \\"title\\": \\"front\\"
+}",
+  "test/output/fixture2/en/common.json": "{
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture2/en/front.json": "{
+  \\"title\\": \\"front\\"
+}",
+  "test/output/fixture2/he/common.json": "{
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_two\\": \\"bla other en\\",
+  \\"test_many\\": \\"bla other en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture2/he/front.json": "{
+  \\"title\\": \\"front\\"
+}",
+  "test/output/fixture2/ja/common.json": "{
+  \\"test\\": \\"bla en\\"
+}",
+  "test/output/fixture2/ja/front.json": "{
+  \\"title\\": \\"front\\"
+}",
 }
 `;
 
 exports[`syncLocales - E2E should sync locale files with nested namespaces 1`] = `
 Object {
-  "test/output/fixture3/de/common.json": "{\\"test\\":\\"bla-de\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture3/de/nested/a.json": "{\\"a\\":\\"bla-de\\"}",
-  "test/output/fixture3/de/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
-  "test/output/fixture3/en/common.json": "{\\"test\\":\\"bla\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture3/en/nested/a.json": "{\\"a\\":\\"bla-en\\"}",
-  "test/output/fixture3/en/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
-  "test/output/fixture3/he/common.json": "{\\"test\\":\\"bla-he\\",\\"test_1\\":\\"bla-plural-he\\",\\"test_0\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
-  "test/output/fixture3/he/nested/a.json": "{\\"a\\":\\"bla-en\\"}",
-  "test/output/fixture3/he/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
-  "test/output/fixture3/ja/common.json": "{\\"test\\":\\"bla\\"}",
-  "test/output/fixture3/ja/nested/a.json": "{\\"a\\":\\"bla-en\\"}",
-  "test/output/fixture3/ja/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
+  "test/output/fixture3/de/common.json": "{
+  \\"test\\": \\"bla-de\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture3/de/nested/a.json": "{
+  \\"a\\": \\"bla-de\\"
+}",
+  "test/output/fixture3/de/nested/b.json": "{
+  \\"b\\": \\"bla-en\\"
+}",
+  "test/output/fixture3/en/common.json": "{
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture3/en/nested/a.json": "{
+  \\"a\\": \\"bla-en\\"
+}",
+  "test/output/fixture3/en/nested/b.json": "{
+  \\"b\\": \\"bla-en\\"
+}",
+  "test/output/fixture3/he/common.json": "{
+  \\"test\\": \\"bla-he\\",
+  \\"test_two\\": \\"bla-two-he\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_many\\": \\"bla other en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture3/he/nested/a.json": "{
+  \\"a\\": \\"bla-en\\"
+}",
+  "test/output/fixture3/he/nested/b.json": "{
+  \\"b\\": \\"bla-en\\"
+}",
+  "test/output/fixture3/ja/common.json": "{
+  \\"test\\": \\"bla en\\"
+}",
+  "test/output/fixture3/ja/nested/a.json": "{
+  \\"a\\": \\"bla-en\\"
+}",
+  "test/output/fixture3/ja/nested/b.json": "{
+  \\"b\\": \\"bla-en\\"
+}",
 }
 `;
 
 exports[`syncLocales - E2E should sync locale files without namespaces 1`] = `
 Object {
-  "test/output/fixture1/de.json": "{\\"test\\":\\"bla\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture1/en.json": "{\\"test\\":\\"bla\\",\\"test_plural\\":\\"bla-plural\\"}",
-  "test/output/fixture1/he.json": "{\\"test\\":\\"bla\\",\\"test_0\\":\\"bla-0\\",\\"test_1\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
-  "test/output/fixture1/ja.json": "{\\"test\\":\\"bla\\"}",
+  "test/output/fixture1/de.json": "{
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture1/en.json": "{
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture1/he.json": "{
+  \\"test\\": \\"bla\\",
+  \\"test_one\\": \\"bla-0\\",
+  \\"test_two\\": \\"bla other en\\",
+  \\"test_many\\": \\"bla other en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/output/fixture1/ja.json": "{
+  \\"test\\": \\"bla en\\"
+}",
 }
 `;
 
 exports[`syncLocales - E2E should sync locales to the same locales folder 1`] = `
 Object {
-  "test/fixtures/fixture3/de/common.json": "{\\"test\\":\\"bla-de\\",\\"test_plural\\":\\"bla-plural\\"}",
+  "test/fixtures/fixture3/de/common.json": "{
+  \\"test\\": \\"bla-de\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
   "test/fixtures/fixture3/de/nested/a.json": "{
   \\"a\\": \\"bla-de\\"
 }
 ",
-  "test/fixtures/fixture3/de/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
+  "test/fixtures/fixture3/de/nested/b.json": "{
+  \\"b\\": \\"bla-en\\"
+}",
   "test/fixtures/fixture3/en/common.json": "{
-  \\"test\\": \\"bla\\",
-  \\"test_plural\\": \\"bla-plural\\"
+  \\"test\\": \\"bla en\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_other\\": \\"bla other en\\"
 }
 ",
   "test/fixtures/fixture3/en/nested/a.json": "{
@@ -73,11 +245,27 @@ Object {
   \\"b\\": \\"bla-en\\"
 }
 ",
-  "test/fixtures/fixture3/he/common.json": "{\\"test\\":\\"bla-he\\",\\"test_1\\":\\"bla-plural-he\\",\\"test_0\\":\\"bla-plural\\",\\"test_2\\":\\"bla-plural\\",\\"test_3\\":\\"bla-plural\\"}",
-  "test/fixtures/fixture3/he/nested/a.json": "{\\"a\\":\\"bla-en\\"}",
-  "test/fixtures/fixture3/he/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
-  "test/fixtures/fixture3/ja/common.json": "{\\"test\\":\\"bla\\"}",
-  "test/fixtures/fixture3/ja/nested/a.json": "{\\"a\\":\\"bla-en\\"}",
-  "test/fixtures/fixture3/ja/nested/b.json": "{\\"b\\":\\"bla-en\\"}",
+  "test/fixtures/fixture3/he/common.json": "{
+  \\"test\\": \\"bla-he\\",
+  \\"test_two\\": \\"bla-two-he\\",
+  \\"test_one\\": \\"bla one en\\",
+  \\"test_many\\": \\"bla other en\\",
+  \\"test_other\\": \\"bla other en\\"
+}",
+  "test/fixtures/fixture3/he/nested/a.json": "{
+  \\"a\\": \\"bla-en\\"
+}",
+  "test/fixtures/fixture3/he/nested/b.json": "{
+  \\"b\\": \\"bla-en\\"
+}",
+  "test/fixtures/fixture3/ja/common.json": "{
+  \\"test\\": \\"bla en\\"
+}",
+  "test/fixtures/fixture3/ja/nested/a.json": "{
+  \\"a\\": \\"bla-en\\"
+}",
+  "test/fixtures/fixture3/ja/nested/b.json": "{
+  \\"b\\": \\"bla-en\\"
+}",
 }
 `;

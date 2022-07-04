@@ -2,7 +2,7 @@ import { LocalesFiles } from '../types/types';
 import { PluralResolver } from './i18next/PluralResolver';
 import { syncJson } from './syncJson';
 
-interface Options {
+interface IOptions {
   localeFiles: LocalesFiles;
   primaryLanguage: string;
   otherLanguages: string[];
@@ -16,7 +16,7 @@ export function syncLocaleFiles({
   otherLanguages,
   pluralResolver,
   useEmptyString,
-}: Options): LocalesFiles {
+}: IOptions): LocalesFiles {
   const primaryLocaleFiles = localeFiles[primaryLanguage];
   otherLanguages.forEach((currentLanguage) => {
     const currentNamespaces = localeFiles[currentLanguage];

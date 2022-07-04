@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { LocalesFiles } from '../../types/types';
 import path from 'path';
-import fs from 'fs-extra';
+import fs, { WriteOptions } from 'fs-extra';
 
 interface Options {
   localeFiles: LocalesFiles;
@@ -9,7 +9,7 @@ interface Options {
   otherLanguages: string[];
   outputFolder: string;
   localesFolder: string;
-  spaces: number;
+  spaces: WriteOptions['spaces'];
 }
 
 export function writeToDisk({

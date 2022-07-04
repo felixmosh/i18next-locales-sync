@@ -11,3 +11,5 @@ export type LocaleFile = {
 };
 
 export type LocalesFiles = Record<string, Record<string, LocaleFile>>;
+
+export type CompatibilityJSON = 'v1' | 'v2' | 'v3' | 'v4';

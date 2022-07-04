@@ -3,6 +3,7 @@
 import fs from 'fs-extra';
 import * as path from 'path';
 import yargs from 'yargs';
+import { CompatibilityJSON } from '../types/types';
 import { LIB_PREFIX } from './constats';
 import chalk from 'chalk';
 import { syncLocales } from './index';
@@ -53,6 +54,13 @@ const options = yargs.usage('i18next-locales-sync -p en -s de ja he -l ./path/to
     normalize: true,
     default: 2,
   },
+  compatibilityJSON: {
+    alias: 'j',
+    description: 'I18next json version',
+    type: 'string',
+    normalize: true,
+    default: 'v4',
+  },
 }).argv;
 
 if (options.config) {
@@ -90,4 +98,5 @@ syncLocales({
   overridePluralRules: options.overridePluralRules as any,
   useEmptyString: options.useEmptyString,
   spaces: options.spaces,
+  compatibilityJSON: options.compatibilityJSON as CompatibilityJSON,
 });

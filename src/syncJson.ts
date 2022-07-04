@@ -1,57 +1,21 @@
 import { JSONObject, JSONValue, LocaleObject } from '../types/types';
 import { MAX_DEPTH } from './constats';
 import { PluralResolver } from './i18next/PluralResolver';
+import { generatePluralForms } from './utils/generatePluralForms';
 import { hasSomePluralSuffix } from './utils/hasSomePluralSuffix';
 import { isObject } from './utils/isObject';
 import { traverse } from './utils/traverse';
 
-function generatePluralForms(
-  {
-    sourceKey,
-    sourceLng,
-    targetLng,
-    newTargetObject,
-    targetObject,
-    sourceObject,
-  }: {
-    sourceObject: JSONObject;
-    targetObject: JSONObject;
-    newTargetObject: JSONObject;
-    sourceKey: string;
-    sourceLng: string;
-    targetLng: string;
-  },
-  pluralResolver: PluralResolver,
-  useEmptyString = false
-) {
-  const singularSourceKey = pluralResolver.getSingularFormOfKey(sourceKey, sourceLng);
-
-  const pluralForms = pluralResolver.getPluralFormsOfKey(singularSourceKey, targetLng);
-  const fallbackValue = useEmptyString ? '' : sourceObject[sourceKey];
-
-  pluralForms.forEach((key) => {
-    newTargetObject[key] =
-      (targetObject && targetObject[key] && !isObject(targetObject[key])
-        ? targetObject[key]
-        : useEmptyString
-        ? ''
-        : sourceObject[key]) || fallbackValue;
-  });
-}
-
-function syncEntry({
-  sourceLng,
-  targetLng,
-  pluralResolver,
-  useEmptyString,
-}: {
+interface IEntryOptions {
   sourceLng: string;
   targetLng: string;
   pluralResolver: PluralResolver;
   useEmptyString?: boolean;
-}) {
-  const sourceSuffixes = pluralResolver.getPluralFormsOfKey('', sourceLng).filter(Boolean);
-  const targetSuffixes = pluralResolver.getPluralFormsOfKey('', targetLng).filter(Boolean);
+}
+
+function syncEntry({ sourceLng, targetLng, pluralResolver, useEmptyString }: IEntryOptions) {
+  const sourceSuffixes = pluralResolver.getPluralFormsOfKey(sourceLng, '').filter(Boolean);
+  const targetSuffixes = pluralResolver.getPluralFormsOfKey(targetLng, '').filter(Boolean);
 
   const isTargetRequiresPluralForm = pluralResolver.needsPlural(targetLng);
 

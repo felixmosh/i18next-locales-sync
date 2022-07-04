@@ -15,10 +15,11 @@ $ npm install --save-dev i18next-locales-sync
 
 1. Supports [namespaces](https://www.i18next.com/principles/namespaces).
 2. Full plural support, based on the real [i18next pluralResolver](https://github.com/felixmosh/i18next-locales-sync/blob/master/src/i18next/PluralResolver.ts).
-3. Sorting secondary locale keys by primary language order.
-4. Supports multiple locale folder structure, `{lng}/{namespace}`, `{namespace}/{lng}`.
-5. Creates missing locale files.
-6. Allows overriding plural rules.
+3. Supports JSON v4
+4. Sorting secondary locale keys by primary language order.
+5. Supports multiple locale folder structure, `{lng}/{namespace}`, `{namespace}/{lng}`.
+6. Creates missing locale files.
+7. Allows overriding plural rules.
 
 ## Usage
 
@@ -64,7 +65,7 @@ syncLocales({
 ## Options
 
 | Key                 | Type                                                  | Default value   |
-| ------------------- | ----------------------------------------------------- | --------------- |
+| ------------------- |-------------------------------------------------------|-----------------|
 | primaryLanguage     | `string`                                              |                 |
 | secondaryLanguages  | `string[]`                                            |                 |
 | localesFolder       | `string`                                              |                 |
@@ -72,6 +73,7 @@ syncLocales({
 | overridePluralRules | `(pluralResolver: PluralResolver)? => PluralResolver` |                 |
 | useEmptyString      | `boolean`                                             | `false`         |
 | spaces              | `number`                                              | `2`             |
+| compatibilityJSON   | `string`                                              | `v4`            |
 
 Currently, the lib supports only `.json` locale files, PRs are welcome :].
 
