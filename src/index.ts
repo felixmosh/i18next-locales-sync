@@ -1,4 +1,6 @@
 import chalk from 'chalk';
+import { WriteOptions } from 'fs-extra';
+import { CompatibilityJSON } from '../types/types';
 import { LIB_PREFIX } from './constats';
 import { generateLocaleFiles } from './generateLocaleFiles';
 import { PluralResolver } from './i18next/PluralResolver';
@@ -13,7 +15,8 @@ interface SyncLocalesOptions {
   fileExtension?: string;
   overridePluralRules?: (pluralResolver: PluralResolver) => PluralResolver;
   useEmptyString?: boolean;
-  spaces?: number;
+  spaces?: WriteOptions['spaces'];
+  compatibilityJSON?: CompatibilityJSON;
 }
 
 export function syncLocales({
@@ -25,8 +28,9 @@ export function syncLocales({
   fileExtension = '.json',
   useEmptyString = false,
   spaces = 2,
+  compatibilityJSON = 'v4',
 }: SyncLocalesOptions) {
-  const pluralResolver = new PluralResolver();
+  const pluralResolver = new PluralResolver({ compatibilityJSON });
 
   if (typeof overridePluralRules === 'function') {
     overridePluralRules(pluralResolver);

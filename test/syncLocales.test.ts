@@ -1,6 +1,6 @@
-import { vol, DirectoryJSON } from 'memfs';
+import { DirectoryJSON, vol } from 'memfs';
+import { relative, resolve } from 'path';
 import { syncLocales } from '../src';
-import { resolve, relative } from 'path';
 
 function makePathNoneUnique(fileSystemList: DirectoryJSON) {
   return Object.keys(fileSystemList).reduce((result, filePath) => {
@@ -86,6 +86,40 @@ describe('syncLocales - E2E', () => {
       localesFolder: resolve('./test/fixtures/fixture4'),
       outputFolder,
       fileExtension: '.json',
+    });
+
+    expect(makePathNoneUnique(vol.toJSON(outputFolder))).toMatchSnapshot();
+  });
+
+  it('should sync locale files with custom spaces', () => {
+    const primaryLanguage = 'en';
+    const otherLanguages = ['ja', 'he', 'de'];
+    const outputFolder = resolve('./test/output/with-spaces');
+
+    syncLocales({
+      primaryLanguage,
+      secondaryLanguages: otherLanguages,
+      localesFolder: resolve('./test/fixtures/fixture5'),
+      outputFolder,
+      fileExtension: '.json',
+      spaces: 4,
+    });
+
+    expect(makePathNoneUnique(vol.toJSON(outputFolder))).toMatchSnapshot();
+  });
+
+  it('should sync locale files with deprecated compatibilityJSON', () => {
+    const primaryLanguage = 'en';
+    const otherLanguages = ['ja', 'he', 'de'];
+    const outputFolder = resolve('./test/output/fixture5');
+
+    syncLocales({
+      primaryLanguage,
+      secondaryLanguages: otherLanguages,
+      localesFolder: resolve('./test/fixtures/fixture5'),
+      outputFolder,
+      fileExtension: '.json',
+      compatibilityJSON: 'v3',
     });
 
     expect(makePathNoneUnique(vol.toJSON(outputFolder))).toMatchSnapshot();

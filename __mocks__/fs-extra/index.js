@@ -29,6 +29,6 @@ module.exports = {
     return JSON.parse(data);
   },
   writeJSONSync: function mockWriteJSONSync(filepath, data, options) {
-    return memfs.writeFileSync(filepath, JSON.stringify(data, null, options.space));
+    return memfs.writeFileSync(filepath, JSON.stringify(data, null, options.spaces));
   },
 };

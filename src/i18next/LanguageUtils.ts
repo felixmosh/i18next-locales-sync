@@ -7,19 +7,22 @@ function capitalize(string: string) {
 }
 
 interface LanguageUtilsOptions {
-  whitelist?: string[] | false;
+  supportedLngs?: string[] | false;
   fallbackLng?: string;
   lowerCaseLng?: boolean;
   nonExplicitWhitelist?: boolean;
   cleanCode?: boolean;
   load?: 'currentOnly' | 'languageOnly';
+  nonExplicitSupportedLngs?: string[];
 }
 
 export class LanguageUtil {
-  private readonly whitelist: LanguageUtilsOptions['whitelist'];
+  private readonly supportedLngs: LanguageUtilsOptions['supportedLngs'];
 
   constructor(private options: LanguageUtilsOptions = {}) {
-    this.whitelist = options.whitelist || false;
+    this.options = options;
+
+    this.supportedLngs = this.options.supportedLngs || false;
   }
 
   getScriptPartFromCode(code: string | null): string | null {
@@ -28,6 +31,7 @@ export class LanguageUtil {
     const p = code.split('-');
     if (p.length === 2) return null;
     p.pop();
+    if (p[p.length - 1].toLowerCase() === 'x') return null;
     return this.formatLanguageCode(p.join('-'));
   }
 
@@ -68,15 +72,18 @@ export class LanguageUtil {
     return this.options.cleanCode || this.options.lowerCaseLng ? code.toLowerCase() : code;
   }
 
-  isWhitelisted(code: string) {
-    if (this.options.load === 'languageOnly' || this.options.nonExplicitWhitelist) {
+  isSupportedCode(code: string) {
+    if (this.options.load === 'languageOnly' || this.options.nonExplicitSupportedLngs) {
       code = this.getLanguagePartFromCode(code);
     }
-    return !this.whitelist || !this.whitelist.length || this.whitelist.indexOf(code) > -1;
+    return (
+      !this.supportedLngs || !this.supportedLngs.length || this.supportedLngs.indexOf(code) > -1
+    );
   }
 
   getFallbackCodes(fallbacks: any, code: string | null): string[] {
     if (!fallbacks) return [];
+    if (typeof fallbacks === 'function') fallbacks = fallbacks(code);
     if (typeof fallbacks === 'string') fallbacks = [fallbacks];
     if (Object.prototype.toString.apply(fallbacks) === '[object Array]') return fallbacks;
 
@@ -86,6 +93,7 @@ export class LanguageUtil {
     let found = fallbacks[code];
     if (!found) found = fallbacks[this.getScriptPartFromCode(code) as any];
     if (!found) found = fallbacks[this.formatLanguageCode(code)];
+    if (!found) found = fallbacks[this.getLanguagePartFromCode(code)];
     if (!found) found = fallbacks.default;
 
     return found || [];
@@ -100,7 +108,7 @@ export class LanguageUtil {
     const codes: string[] = [];
     const addCode = (c: string | null) => {
       if (!c) return;
-      if (this.isWhitelisted(c)) {
+      if (this.isSupportedCode(c)) {
         codes.push(c);
       } else {
         //

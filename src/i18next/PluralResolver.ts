@@ -1,21 +1,28 @@
+import { CompatibilityJSON } from '../../types/types';
+import { LanguageUtil } from './LanguageUtils';
+
 /**
  * Extracted from https://github.com/i18next/i18next/blob/master/src/PluralResolver.js
  */
-import { LanguageUtil } from './LanguageUtils';
 
-type Rule = { numbers: number[]; plurals: (n: any) => number; noAbs?: boolean };
+type Rule = {
+  numbers: number[];
+  plurals(n: any): number;
+  noAbs?: boolean;
+};
 type RuleSet = Record<string, Rule>;
 
 interface PluralResolverOptions {
   simplifyPluralSuffix?: boolean;
   prepend?: string;
-  compatibilityJSON?: 'v1' | 'v2';
+  compatibilityJSON?: CompatibilityJSON;
 }
 
 const defaultOptions = {
   prepend: '_',
   simplifyPluralSuffix: true,
-};
+  compatibilityJSON: 'v3',
+} as const;
 
 // definition http://translate.sourceforge.net/wiki/l10n/pluralforms
 /* eslint-disable */
@@ -37,6 +44,7 @@ const sets = [
       'pt',
       'pt-BR',
       'tg',
+      'tl',
       'ti',
       'tr',
       'uz',
@@ -76,6 +84,7 @@ const sets = [
       'hy',
       'ia',
       'it',
+      'kk',
       'kn',
       'ku',
       'lb',
@@ -121,11 +130,11 @@ const sets = [
       'bo',
       'cgg',
       'fa',
+      'ht',
       'id',
       'ja',
       'jbo',
       'ka',
-      'kk',
       'km',
       'ko',
       'ky',
@@ -144,7 +153,7 @@ const sets = [
     fc: 3,
   },
 
-  { lngs: ['be', 'bs', 'dz', 'hr', 'ru', 'sr', 'uk'], nr: [1, 2, 5], fc: 4 },
+  { lngs: ['be', 'bs', 'cnr', 'dz', 'hr', 'ru', 'sr', 'uk'], nr: [1, 2, 5], fc: 4 },
 
   { lngs: ['ar'], nr: [0, 1, 2, 3, 11, 100], fc: 5 },
   { lngs: ['cs', 'sk'], nr: [1, 2, 5], fc: 6 },
@@ -164,20 +173,20 @@ const sets = [
   { lngs: ['or'], nr: [2, 1], fc: 2 },
   { lngs: ['ro'], nr: [1, 2, 20], fc: 20 },
   { lngs: ['sl'], nr: [5, 1, 2, 3], fc: 21 },
-  { lngs: ['he'], nr: [1, 2, 20, 21], fc: 22 },
+  { lngs: ['he', 'iw'], nr: [1, 2, 20, 21], fc: 22 },
 ];
 
 const _rulesPluralsTypes: Record<number, (n: any) => number> = {
-  1: function(n: any) {
+  1: function(n) {
     return Number(n > 1);
   },
-  2: function(n: any) {
+  2: function(n) {
     return Number(n != 1);
   },
-  3: function(_n: any) {
+  3: function(_n) {
     return 0;
   },
-  4: function(n: any) {
+  4: function(n) {
     return Number(
       n % 10 == 1 && n % 100 != 11
         ? 0
@@ -186,9 +195,9 @@ const _rulesPluralsTypes: Record<number, (n: any) => number> = {
         : 2
     );
   },
-  5: function(n: any) {
+  5: function(n) {
     return Number(
-      n === 0
+      n == 0
         ? 0
         : n == 1
         ? 1
@@ -201,72 +210,81 @@ const _rulesPluralsTypes: Record<number, (n: any) => number> = {
         : 5
     );
   },
-  6: function(n: any) {
+  6: function(n) {
     return Number(n == 1 ? 0 : n >= 2 && n <= 4 ? 1 : 2);
   },
-  7: function(n: any) {
+  7: function(n) {
     return Number(
       n == 1 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2
     );
   },
-  8: function(n: any) {
+  8: function(n) {
     return Number(n == 1 ? 0 : n == 2 ? 1 : n != 8 && n != 11 ? 2 : 3);
   },
-  9: function(n: any) {
+  9: function(n) {
     return Number(n >= 2);
   },
-  10: function(n: any) {
+  10: function(n) {
     return Number(n == 1 ? 0 : n == 2 ? 1 : n < 7 ? 2 : n < 11 ? 3 : 4);
   },
-  11: function(n: any) {
+  11: function(n) {
     return Number(n == 1 || n == 11 ? 0 : n == 2 || n == 12 ? 1 : n > 2 && n < 20 ? 2 : 3);
   },
-  12: function(n: any) {
+  12: function(n) {
     return Number(n % 10 != 1 || n % 100 == 11);
   },
-  13: function(n: any) {
+  13: function(n) {
     return Number(n !== 0);
   },
-  14: function(n: any) {
+  14: function(n) {
     return Number(n == 1 ? 0 : n == 2 ? 1 : n == 3 ? 2 : 3);
   },
-  15: function(n: any) {
+  15: function(n) {
     return Number(
       n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2
     );
   },
-  16: function(n: any) {
+  16: function(n) {
     return Number(n % 10 == 1 && n % 100 != 11 ? 0 : n !== 0 ? 1 : 2);
   },
-  17: function(n: any) {
-    return Number(n == 1 || n % 10 == 1 ? 0 : 1);
+  17: function(n) {
+    return Number(n == 1 || (n % 10 == 1 && n % 100 != 11) ? 0 : 1);
   },
-  18: function(n: any) {
+  18: function(n) {
     return Number(n == 0 ? 0 : n == 1 ? 1 : 2);
   },
-  19: function(n: any) {
+  19: function(n) {
     return Number(
       n == 1
         ? 0
-        : n === 0 || (n % 100 > 1 && n % 100 < 11)
+        : n == 0 || (n % 100 > 1 && n % 100 < 11)
         ? 1
         : n % 100 > 10 && n % 100 < 20
         ? 2
         : 3
     );
   },
-  20: function(n: any) {
-    return Number(n == 1 ? 0 : n === 0 || (n % 100 > 0 && n % 100 < 20) ? 1 : 2);
+  20: function(n) {
+    return Number(n == 1 ? 0 : n == 0 || (n % 100 > 0 && n % 100 < 20) ? 1 : 2);
   },
-  21: function(n: any) {
+  21: function(n) {
     return Number(n % 100 == 1 ? 1 : n % 100 == 2 ? 2 : n % 100 == 3 || n % 100 == 4 ? 3 : 0);
   },
-  22: function(n: any) {
-    return Number(n === 1 ? 0 : n === 2 ? 1 : (n < 0 || n > 10) && n % 10 == 0 ? 2 : 3);
+  22: function(n) {
+    return Number(n == 1 ? 0 : n == 2 ? 1 : (n < 0 || n > 10) && n % 10 == 0 ? 2 : 3);
   },
 };
-
 /* eslint-enable */
+
+const deprecatedJsonVersions = ['v1', 'v2', 'v3'] as const;
+const suffixesOrder = {
+  zero: 0,
+  one: 1,
+  two: 2,
+  few: 3,
+  many: 4,
+  other: 5,
+};
 
 function createRules(): RuleSet {
   return sets.reduce((rules, set) => {
@@ -289,6 +307,14 @@ export class PluralResolver {
   constructor(options: PluralResolverOptions = {}) {
     this.languageUtils = new LanguageUtil();
     this.options = { ...defaultOptions, ...options };
+
+    if (
+      (!this.options.compatibilityJSON || this.options.compatibilityJSON === 'v4') &&
+      (typeof Intl === 'undefined' || !Intl.PluralRules)
+    ) {
+      this.options.compatibilityJSON = 'v3';
+    }
+
     this.rules = createRules();
   }
 
@@ -296,18 +322,31 @@ export class PluralResolver {
     this.rules[lng] = obj;
   }
 
-  getRule(code: string) {
+  getRule(code: string, options: Partial<{ ordinal: true }> = {}) {
+    if (this.shouldUseIntlApi()) {
+      try {
+        return new Intl.PluralRules(code, { type: options.ordinal ? 'ordinal' : 'cardinal' });
+      } catch {
+        return;
+      }
+    }
+
     return this.rules[code] || this.rules[this.languageUtils.getLanguagePartFromCode(code)];
   }
 
-  needsPlural(code: string) {
-    const rule = this.getRule(code);
+  needsPlural(code: string, options = {}) {
+    const rule = this.getRule(code, options);
+
+    if (this.shouldUseIntlApi(rule)) {
+      return rule && rule.resolvedOptions().pluralCategories.length > 1;
+    }
 
     return rule && rule.numbers.length > 1;
   }
 
-  getSingularFormOfKey(key: string, code: string): string {
-    const suffixes = this.getPluralFormsOfKey('', code).filter(Boolean);
+  // Added method
+  getSingularFormOfKey(code: string, key: string): string {
+    const suffixes = this.getSuffixes(code).filter(Boolean);
 
     const suffix = suffixes.find((suffix) => key.endsWith(suffix));
     if (!suffix) {
@@ -317,60 +356,83 @@ export class PluralResolver {
     return key.substring(0, key.length - suffix.length);
   }
 
-  getPluralFormsOfKey(key: string, code: string): string[] {
-    const rule = this.getRule(code);
-
-    if (!rule) return [];
-
-    return rule.numbers.map((n) => {
-      const suffix = this.getSuffix(code, n);
-      return `${key}${suffix}`;
-    });
+  getPluralFormsOfKey(code: string, key: string, options = {}) {
+    return this.getSuffixes(code, options).map((suffix: string) => `${key}${suffix}`);
   }
 
-  getSuffix(code: string, count: number) {
-    const rule = this.getRule(code);
+  getSuffixes(code: string, options = {}) {
+    const rule = this.getRule(code, options);
+
+    if (!rule) {
+      return [];
+    }
+
+    if (this.shouldUseIntlApi(rule)) {
+      return rule
+        .resolvedOptions()
+        .pluralCategories.sort(
+          (pluralCategory1, pluralCategory2) =>
+            suffixesOrder[pluralCategory1] - suffixesOrder[pluralCategory2]
+        )
+        .map((pluralCategory) => `${this.options.prepend}${pluralCategory}`);
+    }
+
+    return rule.numbers.map((number) => this.getSuffix(code, number, options));
+  }
+
+  getSuffix(code: string, count: number, options = {}): string {
+    const rule = this.getRule(code, options);
 
     if (rule) {
-      // if (rule.numbers.length === 1) return ''; // only singular
-
-      const idx = rule.noAbs ? rule.plurals(count) : rule.plurals(Math.abs(count));
-      let suffix: number | number[] | string = rule.numbers[idx];
-
-      // special treatment for lngs only having singular and plural
-      if (this.options.simplifyPluralSuffix && rule.numbers.length === 2 && rule.numbers[0] === 1) {
-        if (suffix === 2) {
-          suffix = 'plural';
-        } else if (suffix === 1) {
-          suffix = '';
-        }
+      if (this.shouldUseIntlApi(rule)) {
+        return `${this.options.prepend}${rule.select(count)}`;
       }
 
-      const returnSuffix = () =>
-        this.options.prepend && suffix.toString()
-          ? this.options.prepend + suffix.toString()
-          : suffix.toString();
-
-      // COMPATIBILITY JSON
-      // v1
-      if (this.options.compatibilityJSON === 'v1') {
-        if (suffix === 1) return '';
-        if (typeof suffix === 'number') return `_plural_${suffix.toString()}`;
-        return returnSuffix();
-      } else if (/* v2 */ this.options.compatibilityJSON === 'v2') {
-        return returnSuffix();
-      } else if (
-        /* v3 - gettext index */ this.options.simplifyPluralSuffix &&
-        rule.numbers.length === 2 &&
-        rule.numbers[0] === 1
-      ) {
-        return returnSuffix();
-      }
-      return this.options.prepend && idx.toString()
-        ? this.options.prepend + idx.toString()
-        : idx.toString();
+      return this.getSuffixRetroCompatible(rule, count);
     }
 
     return '';
+  }
+
+  getSuffixRetroCompatible(rule: Rule, count: number) {
+    const idx = rule.noAbs ? rule.plurals(count) : rule.plurals(Math.abs(count));
+    let suffix: string | number = rule.numbers[idx];
+
+    // special treatment for lngs only having singular and plural
+    if (this.options.simplifyPluralSuffix && rule.numbers.length === 2 && rule.numbers[0] === 1) {
+      if (suffix === 2) {
+        suffix = 'plural';
+      } else if (suffix === 1) {
+        suffix = '';
+      }
+    }
+
+    const returnSuffix = () =>
+      this.options.prepend && suffix.toString()
+        ? this.options.prepend + suffix.toString()
+        : suffix.toString();
+
+    // COMPATIBILITY JSON
+    // v1
+    if (this.options.compatibilityJSON === 'v1') {
+      if (suffix === 1) return '';
+      if (typeof suffix === 'number') return `_plural_${suffix.toString()}`;
+      return returnSuffix();
+    } else if (/* v2 */ this.options.compatibilityJSON === 'v2') {
+      return returnSuffix();
+    } else if (
+      /* v3 - gettext index */ this.options.simplifyPluralSuffix &&
+      rule.numbers.length === 2 &&
+      rule.numbers[0] === 1
+    ) {
+      return returnSuffix();
+    }
+    return this.options.prepend && idx.toString()
+      ? this.options.prepend + idx.toString()
+      : idx.toString();
+  }
+
+  shouldUseIntlApi(_rule?: Rule | Intl.PluralRules): _rule is Intl.PluralRules {
+    return !deprecatedJsonVersions.includes(this.options.compatibilityJSON as any);
   }
 }
