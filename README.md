@@ -95,8 +95,8 @@ examples
 // en/namespace.json
 {
   "foo_male": "bar-male-en",
-  "room": "room",
-  "room_plural": "rooms"
+  "room_one": "room",
+  "room_other": "rooms"
 }
 ```
 
@@ -105,7 +105,7 @@ examples
 {
   "room": "חדר",
   "foo_male": "bar-male-he",
-  "room_3": "חדרים"
+  "room_few": "חדרים"
 }
 ```
 
@@ -114,7 +114,7 @@ examples
 {
   "foo_male": "bar-male-ja",
   "room": "部屋",
-  "room_plural": "部屋"
+  "room_other": "部屋"
 }
 ```
 
@@ -132,8 +132,8 @@ Will result with
 // `en` remains untouched
 {
   "foo_male": "bar-male-en",
-  "room": "room",
-  "room_plural": "rooms"
+  "room_one": "room",
+  "room_other": "rooms"
 }
 ```
 
@@ -145,11 +145,11 @@ Will result with
 // added missing plural forms
 {
   "foo_male": "bar-male-he",
-  "room": "חדר",
-  "room_3": "חדרים",
-  "room_0": "rooms",
-  "room_1": "rooms",
-  "room_2": "rooms"
+  "room_one": "חדר",
+  "room_two": "חדרים",
+  "room_few": "rooms",
+  "room_many": "rooms",
+  "room_other": "rooms"
 }
 ```
 
