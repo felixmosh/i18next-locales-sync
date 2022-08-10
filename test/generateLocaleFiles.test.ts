@@ -155,4 +155,56 @@ describe('generateLocaleFiles', () => {
       },
     });
   });
+
+  it('should support {namespace}/{language} folder structure when namespace starts with lang', () => {
+    const localeFiles = generateLocaleFiles({
+      primaryLanguage: 'en',
+      otherLanguages: ['he'],
+      localesFolder: resolve('./test/fixtures/fixture6'),
+      fileExtension: '.json',
+    });
+
+    expect(localeFiles).toHaveProperty('he', {
+      common: {
+        data: { test: 'bla-he', test_many: 'bla-many' },
+        hash: expect.any(String),
+        filePath: expect.stringMatching(
+          'fixtures/fixture6/common/he.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
+      },
+      hebrew: {
+        data: { test: 'bla', test_few: 'bla-few' },
+        hash: expect.any(String),
+        filePath: expect.stringMatching(
+          'fixtures/fixture6/hebrew/he.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
+      },
+    });
+  });
+
+  it('should support full locale code', () => {
+    const localeFiles = generateLocaleFiles({
+      primaryLanguage: 'en-uk',
+      otherLanguages: ['de-at'],
+      localesFolder: resolve('./test/fixtures/fixture7'),
+      fileExtension: '.json',
+    });
+
+    expect(localeFiles).toHaveProperty('de-at', {
+      common: {
+        data: { test: 'bla-de', test_one: 'bla-de' },
+        hash: expect.any(String),
+        filePath: expect.stringMatching(
+          'fixtures/fixture7/de-at/common.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
+      },
+      front: {
+        data: {},
+        hash: expect.any(String),
+        filePath: expect.stringMatching(
+          'fixtures/fixture7/de-at/front.json'.replace(/[/]/g, '[\\\\/]+')
+        ),
+      },
+    });
+  });
 });

@@ -14,21 +14,18 @@ interface Options {
 
 function extractLanguagesFromPath(filepath: string, allLanguages: string[]) {
   const pathParts = filepath.split(/[\\/]/g);
-  return allLanguages.find((language) => pathParts.some((part) => part.startsWith(language)));
+  return allLanguages.find((language) => pathParts.some((part) => part === language));
 }
 
-function extractNamespaceFromPath(filepath: string, language: string, fileExtension: string) {
-  const filename = path.basename(filepath, fileExtension);
-  const filepathWithoutExtension = path.join(path.dirname(filepath), filename);
-
-  const pathParts = filepathWithoutExtension.split(/[\\/]/g);
+function extractNamespaceFromPath(filepath: string, language: string) {
+  const pathParts = filepath.split(/[\\/]/g);
 
   if (pathParts.length < 2) {
     // handle empty namespace
     pathParts.push('');
   }
 
-  const namespaceParts = pathParts.filter((part) => !part.startsWith(language));
+  const namespaceParts = pathParts.filter((part) => part !== language);
 
   return namespaceParts.join('/');
 }
@@ -94,13 +91,15 @@ export function generateLocaleFiles({
 
   const localeFiles = paths.reduce((structure, filePath) => {
     const remainingPath = path.relative(localesFolder, filePath);
-    const language = extractLanguagesFromPath(remainingPath, allLanguages);
+    const filename = path.basename(remainingPath, fileExtension);
+    const filepathWithoutExtension = path.join(path.dirname(remainingPath), filename);
+    const language = extractLanguagesFromPath(filepathWithoutExtension, allLanguages);
 
     if (!language) {
       return structure;
     }
 
-    const namespace = extractNamespaceFromPath(remainingPath, language, fileExtension);
+    const namespace = extractNamespaceFromPath(filepathWithoutExtension, language);
 
     structure[language] = structure[language] || {};
     structure[language][namespace] = populateFromDisk(filePath);
