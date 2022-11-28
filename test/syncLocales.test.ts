@@ -124,4 +124,24 @@ describe('syncLocales - E2E', () => {
 
     expect(makePathNoneUnique(vol.toJSON(outputFolder))).toMatchSnapshot();
   });
+
+  it('should sync locale files when using override plural rules', () => {
+    const primaryLanguage = 'he';
+    const otherLanguages = ['ar'];
+    const outputFolder = resolve('./test/output/with-override-plural-rules');
+
+    syncLocales({
+      primaryLanguage,
+      secondaryLanguages: otherLanguages,
+      localesFolder: resolve('./test/fixtures/fixture8'),
+      outputFolder,
+      overridePluralRules: (pluralResolver) => {
+        ['he', 'ar'].forEach((lng) =>
+          pluralResolver.addRule(lng, pluralResolver.getRule('en') as any)
+        );
+      },
+    });
+
+    expect(makePathNoneUnique(vol.toJSON(outputFolder))).toMatchSnapshot();
+  });
 });

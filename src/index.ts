@@ -13,7 +13,7 @@ interface SyncLocalesOptions {
   localesFolder: string;
   outputFolder?: string;
   fileExtension?: string;
-  overridePluralRules?: (pluralResolver: PluralResolver) => PluralResolver;
+  overridePluralRules?: (pluralResolver: PluralResolver) => void;
   useEmptyString?: boolean;
   spaces?: WriteOptions['spaces'];
   compatibilityJSON?: CompatibilityJSON;
