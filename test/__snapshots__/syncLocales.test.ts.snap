@@ -3,12 +3,12 @@
 exports[`syncLocales - E2E should sync locale files when using override plural rules 1`] = `
 Object {
   "test/output/with-override-plural-rules/ar/common.json": "{
-  \\"test\\": \\"bla-he\\",
-  \\"test_plural\\": \\"bla-he-plural\\"
-}",
-  "test/output/with-override-plural-rules/he/common.json": "{
   \\"test\\": \\"bla-ar\\",
   \\"test_plural\\": \\"bla-ar-plural\\"
+}",
+  "test/output/with-override-plural-rules/he/common.json": "{
+  \\"test\\": \\"bla-he\\",
+  \\"test_plural\\": \\"bla-he-plural\\"
 }",
 }
 `;
