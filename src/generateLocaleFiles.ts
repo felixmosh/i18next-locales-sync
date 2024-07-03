@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import fs from 'fs-extra';
-import * as glob from 'glob';
+import { fdir } from 'fdir';
+import picomatch from 'picomatch';
 import path from 'path';
 import { LocaleFile, LocalesFiles } from '../types/types';
 import { LIB_PREFIX } from './constats';
@@ -86,7 +87,12 @@ export function generateLocaleFiles({
   primaryLanguage,
   otherLanguages,
 }: Options): LocalesFiles {
-  const paths = glob.sync(`${localesFolder}/**/*${fileExtension}`);
+  const matcher = picomatch(`**/*${fileExtension}`);
+  const paths = new fdir()
+    .withFullPaths()
+    .filter((path) => matcher(path))
+    .crawl(localesFolder)
+    .sync();
   const allLanguages = [primaryLanguage].concat(otherLanguages);
 
   const localeFiles = paths.reduce((structure, filePath) => {
