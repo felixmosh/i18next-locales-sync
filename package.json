@@ -35,14 +35,16 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
+    "chalk": "^5.3.0",
+    "fdir": "^6.1.1",
     "fs-extra": "^10.0.0",
-    "glob": "^7.1.7",
+    "picomatch": "^4.0.2",
     "yargs": "^17.5.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
+    "@types/picomatch": "^2.3.4",
     "auto-changelog": "^2.4.0",
     "husky": "^4.3.0",
     "memfs": "^3.4.7",
@@ -70,5 +72,6 @@
     "github": {
       "release": true
     }
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
