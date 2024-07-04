@@ -96,7 +96,6 @@ Object {
 }",
   "test/output/fixture4/common/he.json": "{
   \\"test\\": \\"bla-he\\",
-  \\"test_many\\": \\"bla-many\\",
   \\"test_one\\": \\"bla one en\\",
   \\"test_two\\": \\"bla other en\\",
   \\"test_other\\": \\"bla other en\\"
@@ -141,7 +140,6 @@ Object {
   \\"test\\": \\"bla en\\",
   \\"test_one\\": \\"bla one en\\",
   \\"test_two\\": \\"bla other en\\",
-  \\"test_many\\": \\"bla other en\\",
   \\"test_other\\": \\"bla other en\\"
 }",
   "test/output/fixture2/he/front.json": "{
@@ -184,7 +182,6 @@ Object {
   \\"test\\": \\"bla-he\\",
   \\"test_two\\": \\"bla-two-he\\",
   \\"test_one\\": \\"bla one en\\",
-  \\"test_many\\": \\"bla other en\\",
   \\"test_other\\": \\"bla other en\\"
 }",
   "test/output/fixture3/he/nested/a.json": "{
@@ -221,7 +218,6 @@ Object {
   \\"test\\": \\"bla\\",
   \\"test_one\\": \\"bla-0\\",
   \\"test_two\\": \\"bla other en\\",
-  \\"test_many\\": \\"bla other en\\",
   \\"test_other\\": \\"bla other en\\"
 }",
   "test/output/fixture1/ja.json": "{
@@ -262,7 +258,6 @@ Object {
   \\"test\\": \\"bla-he\\",
   \\"test_two\\": \\"bla-two-he\\",
   \\"test_one\\": \\"bla one en\\",
-  \\"test_many\\": \\"bla other en\\",
   \\"test_other\\": \\"bla other en\\"
 }",
   "test/fixtures/fixture3/he/nested/a.json": "{

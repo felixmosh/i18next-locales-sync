@@ -16,7 +16,6 @@ describe('syncJson: plurals', () => {
       book: 'book en',
       book_one: 'book en',
       book_two: 'books en',
-      book_many: 'books en',
       book_other: 'books en',
     });
   });
@@ -37,7 +36,6 @@ describe('syncJson: plurals', () => {
       book: '',
       book_one: '',
       book_two: 'books he 0',
-      book_many: '',
       book_other: '',
     });
   });
@@ -119,7 +117,6 @@ describe('syncJson: plurals', () => {
         book: 'book he',
         book_one: 'book one he',
         book_two: 'books two he',
-        book_many: 'books many he',
         book_other: 'books other he',
       },
       language: 'he',
