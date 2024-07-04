@@ -148,7 +148,6 @@ Will result with
   "room_one": "חדר",
   "room_two": "חדרים",
   "room_few": "rooms",
-  "room_many": "rooms",
   "room_other": "rooms"
 }
 ```
