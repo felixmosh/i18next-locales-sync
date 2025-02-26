@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0",
+  "version": "2.1.1",
   "name": "i18next-locales-sync",
   "description": "Syncs i18next locale resource files against a primary language.\n",
   "keywords": [
