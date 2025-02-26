@@ -32,19 +32,18 @@ function syncEntry({ sourceLng, targetLng, pluralResolver, useEmptyString }: IEn
     } else if (isObject(sourceValue)) {
       newTargetObject[sourceKey] = {};
     } else if (hasSomePluralSuffix(sourceKey, sourceSuffixes)) {
-      isTargetRequiresPluralForm &&
-        generatePluralForms(
-          {
-            sourceObject,
-            targetObject,
-            newTargetObject,
-            sourceKey,
-            sourceLng,
-            targetLng,
-          },
-          pluralResolver,
-          useEmptyString
-        );
+      generatePluralForms(
+        {
+          sourceObject,
+          targetObject,
+          newTargetObject,
+          sourceKey,
+          sourceLng,
+          targetLng,
+        },
+        pluralResolver,
+        { useEmptyString, isTargetRequiresPluralForm }
+      );
     } else {
       newTargetObject[sourceKey] =
         targetValue && !isObject(targetValue) ? targetValue : useEmptyString ? '' : sourceValue;

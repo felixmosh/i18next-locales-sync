@@ -50,6 +50,20 @@ describe('syncJson: plurals', () => {
     expect(actual.data).toStrictEqual({ book: 'book en' });
   });
 
+  it("should add keep base form when source doesn't have it and target language doesn't supports plural forms", () => {
+    const source = {
+      data: { book_one: 'book en', book_other: 'books en' },
+      language: 'en',
+    };
+    const actual = syncJson({
+      source,
+      target: { data: { book: 'book ja', book_other: 'book other ja' }, language: 'ja' },
+      pluralResolver,
+    });
+
+    expect(actual.data).toStrictEqual({ book: 'book ja' });
+  });
+
   it('should not override existing plural forms', () => {
     const source = {
       data: { book: 'book en', book_one: 'book en', book_other: 'books en' },
