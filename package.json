@@ -26,10 +26,12 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
-    "start": "tsdx watch --target=node",
-    "build": "rm -rf dist && tsc",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
+    "start": "rslib build --watch",
+    "build": "rslib build",
+    "test": "rstest run",
+    "test:watch": "rstest watch",
+    "lint": "oxlint",
+    "format": "oxfmt .",
     "version": "auto-changelog -p && git add CHANGELOG.md",
     "release": "release-it --only-version",
     "prepare": "husky"
@@ -41,18 +43,27 @@
     "yargs": "^18.2.0"
   },
   "devDependencies": {
+    "@rslib/core": "^1.0.3",
+    "@rstest/core": "^0.12.3",
+    "@rstest/coverage-v8": "^0.12.3",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^26.6.5",
     "@types/picomatch": "^4.0.3",
     "@types/yargs": "^17.0.35",
     "auto-changelog": "^2.7.0",
     "husky": "^9.1.7",
-    "memfs": "^4.9.3",
+    "memfs": "^3.5.0",
+    "oxfmt": "^0.73.0",
+    "oxlint": "^1.88.0",
     "release-it": "^21.1.1",
-    "tsdx": "^0.14.1",
     "typescript": "^6.0.3"
   },
   "release-it": {
+    "npm": {
+      "provenance": true,
+      "skipChecks": true,
+      "publish": false
+    },
     "git": {
       "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
     },
@@ -63,11 +74,6 @@
         "yarn build"
       ],
       "after:bump": "npx auto-changelog -p"
-    },
-    "npm": {
-      "provenance": true,
-      "skipChecks": true,
-      "publish": false
     }
   }
 }

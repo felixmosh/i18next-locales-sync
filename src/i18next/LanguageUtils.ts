@@ -20,8 +20,6 @@ export class LanguageUtil {
   private readonly supportedLngs: LanguageUtilsOptions['supportedLngs'];
 
   constructor(private options: LanguageUtilsOptions = {}) {
-    this.options = options;
-
     this.supportedLngs = this.options.supportedLngs || false;
   }
 
