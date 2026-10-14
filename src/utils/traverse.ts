@@ -26,7 +26,7 @@ export function traverse(
     }
 
     const sourceValue = source[key];
-    fn.apply(null, [source, target, finalObj, key, source[key], target && target[key]]);
+    fn(source, target, finalObj, key, source[key], target && target[key]);
     if (isObject(sourceValue)) {
       traverse(sourceValue, target && (target[key] as any), fn, depth - 1, finalObj[key]);
     }

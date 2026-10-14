@@ -1,10 +1,10 @@
-import crypto from 'crypto';
-import fs from 'fs-extra';
 import { fdir } from 'fdir';
-import picomatch from 'picomatch';
+import fs from 'fs-extra';
 import path from 'path';
+import picomatch from 'picomatch';
 import { LocaleFile, LocalesFiles } from '../types/types';
 import { LIB_PREFIX } from './constats';
+import { hashJson } from './utils/hashJson';
 
 interface Options {
   primaryLanguage: string;
@@ -72,10 +72,7 @@ export function populateFromDisk(filePath: string): LocaleFile {
   if (fs.existsSync(filePath)) {
     data = fs.readJSONSync(filePath, { encoding: 'utf8' });
 
-    hash = crypto
-      .createHash('md5')
-      .update(JSON.stringify(data))
-      .digest('hex');
+    hash = hashJson(data);
   }
 
   return { filePath, data, hash };
@@ -90,7 +87,7 @@ export function generateLocaleFiles({
   const matcher = picomatch(`**/*${fileExtension}`);
   const paths = new fdir()
     .withFullPaths()
-    .filter((path) => matcher(path))
+    .filter((filePath) => matcher(filePath))
     .crawl(localesFolder)
     .sync();
   const allLanguages = [primaryLanguage].concat(otherLanguages);

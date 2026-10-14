@@ -1,7 +1,7 @@
-import crypto from 'crypto';
-import { LocalesFiles } from '../../types/types';
+import fs from 'fs-extra';
 import path from 'path';
-import fs, { WriteOptions } from 'fs-extra';
+import { LocalesFiles } from '../../types/types';
+import { hashJson } from './hashJson';
 
 interface Options {
   localeFiles: LocalesFiles;
@@ -9,7 +9,7 @@ interface Options {
   otherLanguages: string[];
   outputFolder: string;
   localesFolder: string;
-  spaces: WriteOptions['spaces'];
+  spaces: string | number;
 }
 
 export function writeToDisk({
@@ -32,11 +32,7 @@ export function writeToDisk({
       if (
         localesFolder !== outputFolder ||
         otherLanguageLocaleFile.hash === '' ||
-        otherLanguageLocaleFile.hash !==
-          crypto
-            .createHash('md5')
-            .update(JSON.stringify(otherLanguageLocaleFile.data))
-            .digest('hex')
+        otherLanguageLocaleFile.hash !== hashJson(otherLanguageLocaleFile.data)
       ) {
         fs.ensureFileSync(outputFilePath);
         fs.writeJSONSync(outputFilePath, otherLanguageLocaleFile.data, {
