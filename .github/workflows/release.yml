@@ -20,12 +20,6 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
 
-      - name: Re-attach HEAD
-        # release-it runs `git symbolic-ref HEAD` during init, which fails on the
-        # detached HEAD that a tag checkout leaves behind. Point HEAD at a local
-        # branch on the tagged commit so the release uses the right tree.
-        run: git checkout -B release-${{ github.ref_name }}
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
@@ -48,6 +42,9 @@ jobs:
         run: yarn build
 
       - name: Release
-        run: npx release-it --ci --no-increment --npm.publish --github.release --git.commit=false --git.tag=false --git.push=false
+        # The tag checkout leaves a detached HEAD on a branch with no upstream, and
+        # release-it aborts with "No upstream configured for current branch". It
+        # never commits, tags or pushes here, so that check is meaningless.
+        run: npx release-it --ci --no-increment --npm.publish --github.release --git.commit=false --git.tag=false --git.push=false --git.requireUpstream=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
