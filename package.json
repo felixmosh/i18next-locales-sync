@@ -23,7 +23,7 @@
     "types"
   ],
   "engines": {
-    "node": "^20.19.0 || >=22.12.0"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "start": "rslib build --watch",
@@ -55,7 +55,7 @@
     "memfs": "^3.5.0",
     "oxfmt": "^0.73.0",
     "oxlint": "^1.88.0",
-    "release-it": "^21.1.1",
+    "release-it": "^20.2.1",
     "typescript": "^6.0.3"
   },
   "release-it": {
