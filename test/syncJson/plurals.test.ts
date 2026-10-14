@@ -64,6 +64,51 @@ describe('syncJson: plurals', () => {
     expect(actual.data).toStrictEqual({ book: 'book ja' });
   });
 
+  it("should add base form when source doesn't have it and target language doesn't support plural forms", () => {
+    const source = {
+      data: { book_one: 'book en', book_other: 'books en' },
+      language: 'en',
+    };
+    const actual = syncJson({ source, target: { data: {}, language: 'ja' }, pluralResolver });
+
+    expect(actual.data).toStrictEqual({ book: 'book en' });
+  });
+
+  it("should add base form from the source's base form when target language doesn't support plural forms", () => {
+    const source = {
+      data: { book: 'a book', book_one: 'a book', book_other: 'books' },
+      language: 'en',
+    };
+    const actual = syncJson({ source, target: { data: {}, language: 'ja' }, pluralResolver });
+
+    expect(actual.data).toStrictEqual({ book: 'a book' });
+  });
+
+  it("should add base form with empty string as a value when target language doesn't support plural forms", () => {
+    const source = {
+      data: { book_one: 'book en', book_other: 'books en' },
+      language: 'en',
+    };
+    const actual = syncJson({
+      source,
+      target: { data: {}, language: 'ja' },
+      pluralResolver,
+      useEmptyString: true,
+    });
+
+    expect(actual.data).toStrictEqual({ book: '' });
+  });
+
+  it("should add base form in nested objects when target language doesn't support plural forms", () => {
+    const source = {
+      data: { section: { book_one: 'book en', book_other: 'books en' } },
+      language: 'en',
+    };
+    const actual = syncJson({ source, target: { data: {}, language: 'ja' }, pluralResolver });
+
+    expect(actual.data).toStrictEqual({ section: { book: 'book en' } });
+  });
+
   it('should not override existing plural forms', () => {
     const source = {
       data: { book: 'book en', book_one: 'book en', book_other: 'books en' },
