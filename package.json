@@ -23,7 +23,7 @@
     "types"
   ],
   "engines": {
-    "node": ">=12"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
     "start": "tsdx watch --target=node",
@@ -35,21 +35,22 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
-    "fdir": "^6.1.1",
-    "fs-extra": "^10.0.0",
-    "picomatch": "^4.0.4",
-    "yargs": "^17.5.1"
+    "fdir": "^6.5.0",
+    "fs-extra": "^11.4.1",
+    "picomatch": "^4.0.7",
+    "yargs": "^18.2.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.13",
-    "@types/picomatch": "^2.3.4",
-    "auto-changelog": "^2.4.0",
-    "husky": "^9.0.11",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^26.6.5",
+    "@types/picomatch": "^4.0.3",
+    "@types/yargs": "^17.0.35",
+    "auto-changelog": "^2.7.0",
+    "husky": "^9.1.7",
     "memfs": "^4.9.3",
-    "release-it": "^16.3.0",
+    "release-it": "^21.1.1",
     "tsdx": "^0.14.1",
-    "typescript": "^5.5.3"
+    "typescript": "^6.0.3"
   },
   "release-it": {
     "git": {
@@ -63,8 +64,10 @@
       ],
       "after:bump": "npx auto-changelog -p"
     },
-    "github": {
-      "release": true
+    "npm": {
+      "provenance": true,
+      "skipChecks": true,
+      "publish": false
     }
   }
 }

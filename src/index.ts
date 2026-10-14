@@ -1,5 +1,4 @@
-import chalk from 'chalk';
-import { WriteOptions } from 'fs-extra';
+import { styleText } from 'node:util';
 import { CompatibilityJSON } from '../types/types';
 import { LIB_PREFIX } from './constats';
 import { generateLocaleFiles } from './generateLocaleFiles';
@@ -15,7 +14,7 @@ interface SyncLocalesOptions {
   fileExtension?: string;
   overridePluralRules?: (pluralResolver: PluralResolver) => void;
   useEmptyString?: boolean;
-  spaces?: WriteOptions['spaces'];
+  spaces?: string | number;
   compatibilityJSON?: CompatibilityJSON;
 }
 
@@ -61,6 +60,9 @@ export function syncLocales({
   });
 
   console.log(
-    chalk.green`${chalk.bold.greenBright(LIB_PREFIX)} '${localesFolder}' were synced successfully.`
+    styleText(
+      'green',
+      `${styleText(['bold', 'greenBright'], LIB_PREFIX)} '${localesFolder}' were synced successfully.`
+    )
   );
 }
